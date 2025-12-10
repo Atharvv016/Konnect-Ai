@@ -253,3 +253,28 @@ export const generateSpeech = async (text: string): Promise<string> => {
     return ''; // Return empty string on failure to avoid breaking the app flow
   }
 };
+
+/**
+ * Analyze a video for bug reproduction steps using Gemini API.
+ */
+export async function analyzeBugVideo(videoFile: File, mimeType: string): Promise<string> {
+  // Simulate Gemini API call
+  // Prompt: Watch the video, identify the exact sequence of user actions that led to the bug, and output as numbered steps for Jira.
+  return `Steps to Reproduce:\n1. User opens the app.\n2. User clicks on the login button.\n3. Error occurs after submitting credentials.\n... (simulated)`;
+}
+
+/**
+ * Compare a screenshot against a Figma frame using Gemini's vision capability.
+ */
+export async function compareUI(screenshotFile: File, figmaFrameUrl: string): Promise<string> {
+  // Simulate Figma API call to fetch frame image using VITE_FIGMA_TOKEN
+  const figmaToken = import.meta.env.VITE_FIGMA_TOKEN;
+  // Simulate Gemini vision comparison
+  // Output JSON object detailing pixel discrepancies or missing elements
+  return JSON.stringify({
+    discrepancies: [
+      { type: 'missing-element', description: 'Button "Submit" not found in screenshot.' },
+      { type: 'pixel-difference', description: 'Header color does not match design.' }
+    ]
+  }, null, 2);
+}

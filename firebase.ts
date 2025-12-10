@@ -6,7 +6,7 @@ import { getFirestore } from 'firebase/firestore';
 // Using the environment API key as requested. 
 // Note: For full functionality, authDomain and projectId must match your actual Firebase Console settings.
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
+  apiKey: "AIzaSyCU-wY2-F1Hll9MHmmj7pIsgpMcmMAh7go",
   authDomain: "konnect-ai-orchestrator.firebaseapp.com",
   projectId: "konnect-ai-orchestrator",
   storageBucket: "konnect-ai-orchestrator.appspot.com",

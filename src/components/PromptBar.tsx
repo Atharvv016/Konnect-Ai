@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Mic, Send, StopCircle, MicOff, ImagePlus, Volume2, VolumeX, Video } from 'lucide-react';
+import { analyzeBugVideo } from '../../services/geminiService';
 
 interface PromptBarProps {
   onSend: (text: string, audioBlob?: Blob) => void;
@@ -23,6 +24,8 @@ export const PromptBar: React.FC<PromptBarProps> = ({
   const [text, setText] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
+  const [videoResult, setVideoResult] = useState<string | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<number | null>(null);
@@ -118,6 +121,24 @@ export const PromptBar: React.FC<PromptBarProps> = ({
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // Type for video file handler
+  const handleVideoDrop = async (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    const files: FileList = event.dataTransfer.files;
+    const videoFile: File | undefined = Array.from(files).find((f: File) => f.type === 'video/mp4');
+    if (videoFile) {
+      setIsVideoLoading(true);
+      setVideoResult(null);
+      try {
+        const result: string = await analyzeBugVideo(videoFile, videoFile.type);
+        setVideoResult(result);
+      } catch (err) {
+        setVideoResult('Error analyzing video.');
+      }
+      setIsVideoLoading(false);
+    }
+  };
+
   return (
     <div className="fixed bottom-6 left-0 right-0 z-50 px-4">
       <div className="max-w-3xl mx-auto">
@@ -145,7 +166,7 @@ export const PromptBar: React.FC<PromptBarProps> = ({
             <input 
               type="file" 
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
-              accept="video/*" 
+              accept="video/mp4,video/*" 
               onChange={onVideoUpload}
             />
           </div>
@@ -219,6 +240,30 @@ export const PromptBar: React.FC<PromptBarProps> = ({
 
         </div>
       </div>
+
+      {/* Video Drop Zone - Added for drag-and-drop video support */}
+      <div 
+        onDragOver={e => e.preventDefault()} 
+        onDrop={handleVideoDrop}
+        className="fixed inset-0 z-40 pointer-events-none"
+      >
+        <div className="flex items-center justify-center h-full pointer-events-auto">
+          {isVideoLoading ? (
+            <div className="text-center text-teal-400">
+              Analyzing video...
+            </div>
+          ) : videoResult ? (
+            <div className="mt-2 p-2 bg-teal-900/20 rounded text-white font-mono whitespace-pre">
+              {videoResult}
+            </div>
+          ) : (
+            <div className="text-zinc-500">
+              Drag and drop an .mp4 video file here to analyze
+            </div>
+          )}
+        </div>
+      </div>
+
     </div>
   );
 };

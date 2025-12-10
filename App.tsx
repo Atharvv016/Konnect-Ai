@@ -13,6 +13,9 @@ import { PromptBar } from './components/PromptBar';
 import { DeviceMeshList } from './components/DeviceMeshList';
 import { QRCodeConnectModal } from './components/QRCodeConnectModal';
 import { Bot, Upload, Loader2, Sparkles, AlertCircle, Settings, Terminal, XCircle, LayoutList, Command, Laptop, ChevronDown, Clipboard, QrCode } from 'lucide-react';
+import uploadSound from './sounds/upload.mp3';
+import errorSound from './sounds/error.mp3';
+import successSound from './sounds/success.mp3';
 
 const blobToBase64 = (blob: Blob): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -26,6 +29,22 @@ const blobToBase64 = (blob: Blob): Promise<string> => {
     reader.readAsDataURL(blob);
   });
 };
+
+// Utility to play a sound
+const playSound = (src: string) => {
+  const audio = new Audio(src);
+  audio.volume = 0.5;
+  audio.play();
+};
+
+// Simulate Sentry/Datadog log context fetch
+async function fetchLogContext(errorId: string): Promise<{ stackTrace: string, rootCause: string }> {
+  // Simulate API call
+  return {
+    stackTrace: `Simulated stack trace for error ID: ${errorId}`,
+    rootCause: 'Simulated root cause analysis: Null pointer exception in UserService.'
+  };
+}
 
 export default function App() {
   const [state, setState] = useState<SimulationState>({ status: 'idle' });
@@ -275,23 +294,44 @@ export default function App() {
     setStagedImage(null);
   };
 
+  // --- Play sound on error ---
+  useEffect(() => {
+    if (state.status === 'error') {
+      playSound(errorSound);
+    }
+  }, [state.status]);
+
+  // --- Play sound on successful upload ---
+  useEffect(() => {
+    if (stagedImage && state.status === 'idle') {
+      playSound(uploadSound);
+    }
+  }, [stagedImage, state.status]);
+
+  // --- Play sound on orchestration complete ---
+  useEffect(() => {
+    if (state.status === 'complete') {
+      playSound(successSound);
+    }
+  }, [state.status]);
+
   return (
     <div className="min-h-screen font-sans text-zinc-100 selection:bg-red-600/30 selection:text-red-200">
       
       {/* Background Image & Overlay */}
       <div className="fixed inset-0 z-0 bg-black">
-          {/* Red gradient background with white/black fading */}
+          {/* Teal/blue/black vignette gradient background inspired by Figma Plugins image */}
           <div 
             className="w-full h-full bg-gradient-to-br"
             style={{
-              background: 'linear-gradient(135deg, #0f0f0f 0%, #1e293b 15%, #374151 25%, #7f1d1d 40%, #b91c1c 60%, #dc2626 80%, #f5f5f5 95%, #ffffff 100%)'
+              background: 'radial-gradient(ellipse 120% 100% at 30% 0%, #b6e3e3 0%, #3b7c8a 40%, #1a2a36 70%, #10151c 100%)'
             }}
           />
           {/* Multi-layer overlay for foggy depth effect */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-white/5" />
-          <div className="absolute inset-0 bg-gradient-to-l from-red-950/40 via-transparent to-black/30" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(255,255,255,0.1),transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(201,42,42,0.15),transparent_60%)]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-white/5" />
+          <div className="absolute inset-0 bg-gradient-to-l from-teal-900/40 via-transparent to-black/30" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(182,227,227,0.15),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,rgba(59,124,138,0.15),transparent_60%)]" />
       </div>
 
       <ConfigPanel 
@@ -313,9 +353,9 @@ export default function App() {
       {/* Clipboard Toast Notification */}
       {clipboardToast && (
         <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 animate-in slide-in-from-top-2 fade-in duration-300">
-           <div className="bg-black/80 backdrop-blur-xl border border-red-600/30 text-zinc-100 px-4 py-2 rounded-full shadow-2xl flex items-center gap-2">
-              <div className="bg-red-600/20 p-1 rounded-full">
-                <Clipboard size={14} className="text-red-500" />
+           <div className="bg-black/80 backdrop-blur-xl border border-orange-900/30 text-zinc-100 px-4 py-2 rounded-full shadow-2xl flex items-center gap-2">
+              <div className="bg-orange-900/20 p-1 rounded-full">
+                <Clipboard size={14} className="text-orange-700" />
               </div>
               <span className="text-sm font-medium">Clipboard synced from Desktop</span>
            </div>
@@ -326,8 +366,8 @@ export default function App() {
       <header className="fixed top-0 left-0 right-0 z-40 bg-black/40 backdrop-blur-md border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between relative">
           <div className="flex items-center gap-3">
-            <div className="bg-red-600/10 p-2 rounded-lg border border-red-600/20 backdrop-blur-sm shadow-[0_0_15px_rgba(201,42,42,0.1)]">
-              <Bot size={20} className="text-red-500" />
+            <div className="bg-orange-900/10 p-2 rounded-lg border border-orange-900/20 backdrop-blur-sm shadow-[0_0_15px_rgba(202,65,12,0.1)]">
+              <Bot size={20} className="text-orange-700" />
             </div>
             <div>
               <h1 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
@@ -342,15 +382,15 @@ export default function App() {
                   onClick={() => setIsMeshListOpen(!isMeshListOpen)}
                   className={`hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all backdrop-blur-sm ${
                     isMeshListOpen 
-                      ? 'bg-red-950/40 border-red-600/50' 
+                      ? 'bg-blue-950/40 border-blue-600/50' 
                       : 'bg-black/60 border-white/5 hover:bg-black/80'
                   }`}
                 >
-                  <Laptop size={14} className={isConnected ? "text-red-500" : "text-zinc-600"} />
+                  <Laptop size={14} className={isConnected ? "text-orange-700" : "text-zinc-600"} />
                   <span className="text-[10px] font-medium text-zinc-400">
                     {isConnected ? "MESH ACTIVE" : "MESH OFFLINE"}
                   </span>
-                  {isConnected && <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />}
+                  {isConnected && <span className="w-1.5 h-1.5 rounded-full bg-orange-700 animate-pulse" />}
                   <ChevronDown size={12} className={`text-zinc-500 transition-transform ${isMeshListOpen ? 'rotate-180' : ''}`} />
                 </button>
 
@@ -367,7 +407,7 @@ export default function App() {
              {/* Connect Mobile Button */}
              <button
                onClick={() => setIsQRModalOpen(true)}
-               className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-black bg-red-500 hover:bg-red-600 rounded-full transition-all shadow-[0_0_15px_rgba(201,42,42,0.3)] hover:shadow-[0_0_20px_rgba(201,42,42,0.6)]"
+               className="hidden md:flex items-center gap-2 px-3 py-1.5 text-xs font-bold text-white bg-gradient-to-r from-teal-400 via-cyan-500 to-blue-700 hover:from-teal-300 hover:via-cyan-400 hover:to-blue-600 rounded-full transition-all shadow-lg border border-teal-700/30"
              >
                <QrCode size={14} />
                <span>Connect Mobile</span>
@@ -406,8 +446,8 @@ export default function App() {
             onDrop={handleDrop}
           >
             <div className="text-center space-y-4">
-              <div className="bg-red-600/20 rounded-full p-6 w-20 h-20 flex items-center justify-center mx-auto border border-red-600/50">
-                <Upload size={40} className="text-red-500" />
+              <div className="bg-orange-900/20 rounded-full p-6 w-20 h-20 flex items-center justify-center mx-auto border border-orange-900/50">
+                <Upload size={40} className="text-orange-700" />
               </div>
               <div>
                 <h3 className="text-2xl font-bold text-white mb-2">Drop Image Here</h3>
@@ -422,19 +462,19 @@ export default function App() {
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
-          className={`transition-all duration-200 ${isDraggingOver ? 'ring-2 ring-red-600/50' : ''}`}
+          className={`transition-all duration-200 ${isDraggingOver ? 'ring-2 ring-orange-900/50' : ''}`}
         >
         {/* Error Notification */}
         {state.status === 'error' && (
-           <div className="mb-8 bg-red-950/40 backdrop-blur-md border border-red-500/20 rounded-xl p-4 flex items-center gap-4 animate-in slide-in-from-top-2">
-             <div className="bg-red-500/10 p-2 rounded-full">
-               <AlertCircle className="text-red-400 w-5 h-5" />
+           <div className="mb-8 bg-orange-900/40 backdrop-blur-md border border-orange-700/20 rounded-xl p-4 flex items-center gap-4 animate-in slide-in-from-top-2">
+             <div className="bg-orange-700/10 p-2 rounded-full">
+               <AlertCircle className="text-orange-400 w-5 h-5" />
              </div>
              <div className="flex-1 min-w-0">
-               <h3 className="text-sm font-semibold text-red-200">Simulation Failed</h3>
-               <p className="text-sm text-red-300/80 break-words mt-0.5">{state.errorMessage}</p>
+               <h3 className="text-sm font-semibold text-orange-200">Simulation Failed</h3>
+               <p className="text-sm text-orange-300/80 break-words mt-0.5">{state.errorMessage}</p>
              </div>
-             <button onClick={() => setState(prev => ({ ...prev, status: 'idle' }))} className="text-sm font-medium text-red-400 hover:text-red-300 hover:underline">Dismiss</button>
+             <button onClick={() => setState(prev => ({ ...prev, status: 'idle' }))} className="text-sm font-medium text-orange-400 hover:text-orange-300 hover:underline">Dismiss</button>
            </div>
         )}
 
@@ -442,8 +482,8 @@ export default function App() {
         {state.status === 'idle' && !stagedImage && !state.imagePreview && (
           <div className="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-8 animate-in fade-in duration-700">
             <div className="relative">
-               <div className="absolute inset-0 bg-red-600 blur-[100px] opacity-10 rounded-full" />
-               <Bot size={64} className="relative text-white drop-shadow-[0_0_20px_rgba(201,42,42,0.3)]" strokeWidth={1.5} />
+               <div className="absolute inset-0 bg-blue-600 blur-[100px] opacity-10 rounded-full" />
+               <Bot size={64} className="relative text-white drop-shadow-[0_0_20px_rgba(14,116,144,0.3)]" strokeWidth={1.5} />
             </div>
             <div className="space-y-4 max-w-2xl">
               <p className="text-lg text-zinc-400">
@@ -453,18 +493,18 @@ export default function App() {
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl mt-8">
-               <button onClick={() => document.getElementById('file-upload-hero')?.click()} className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-red-600/30 hover:shadow-lg hover:shadow-red-600/5">
-                  <Upload className="w-5 h-5 text-red-500 mb-3 group-hover:scale-110 transition-transform" />
+               <button onClick={() => document.getElementById('file-upload-hero')?.click()} className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-orange-900/30 hover:shadow-lg hover:shadow-orange-900/5">
+                  <Upload className="w-5 h-5 text-orange-700 mb-3 group-hover:scale-110 transition-transform" />
                   <div className="font-medium text-zinc-200 text-sm">Upload Diagram</div>
                   <div className="text-xs text-zinc-500 mt-1">Analyze flows visually</div>
                </button>
-               <button className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-red-600/30 hover:shadow-lg hover:shadow-red-600/5 cursor-default">
-                  <Sparkles className="w-5 h-5 text-red-500 mb-3 group-hover:scale-110 transition-transform" />
+               <button className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-orange-900/30 hover:shadow-lg hover:shadow-orange-900/5 cursor-default">
+                  <Sparkles className="w-5 h-5 text-orange-700 mb-3 group-hover:scale-110 transition-transform" />
                   <div className="font-medium text-zinc-200 text-sm">Auto-Detect Bugs</div>
                   <div className="text-xs text-zinc-500 mt-1">From Jira screenshots</div>
                </button>
-               <button className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-red-600/30 hover:shadow-lg hover:shadow-red-600/5 cursor-default">
-                  <Command className="w-5 h-5 text-red-500 mb-3 group-hover:scale-110 transition-transform" />
+               <button className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-orange-900/30 hover:shadow-lg hover:shadow-orange-900/5 cursor-default">
+                  <Command className="w-5 h-5 text-orange-700 mb-3 group-hover:scale-110 transition-transform" />
                   <div className="font-medium text-zinc-200 text-sm">Voice Command</div>
                   <div className="text-xs text-zinc-500 mt-1">Speak your plan</div>
                </button>
@@ -484,10 +524,10 @@ export default function App() {
               <div className="bg-black/40 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden shadow-2xl shadow-black/80">
                 <div className="px-4 py-3 border-b border-white/5 bg-white/5 flex items-center justify-between">
                    <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                     <Sparkles className="w-3 h-3 text-red-500" />
+                     <Sparkles className="w-3 h-3 text-orange-700" />
                      Context Input
                    </h3>
-                   {state.status === 'analyzing' && <Loader2 className="w-3 h-3 text-red-500 animate-spin" />}
+                   {state.status === 'analyzing' && <Loader2 className="w-3 h-3 text-orange-700 animate-spin" />}
                 </div>
                 
                 <div className="relative group bg-black/40">
@@ -511,8 +551,8 @@ export default function App() {
 
                   {state.status === 'analyzing' && (
                     <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center text-zinc-200 backdrop-blur-[2px]">
-                       <Loader2 className="w-8 h-8 animate-spin mb-3 text-red-500" />
-                       <span className="text-sm font-mono tracking-wide text-red-200">ANALYZING PIXELS...</span>
+                       <Loader2 className="w-8 h-8 animate-spin mb-3 text-orange-700" />
+                       <span className="text-sm font-mono tracking-wide text-orange-200">ANALYZING PIXELS...</span>
                     </div>
                   )}
                 </div>
@@ -557,7 +597,7 @@ export default function App() {
                              <div className="p-4 space-y-2 font-mono text-xs max-h-48 overflow-y-auto custom-scrollbar">
                                {state.response.executionResults.toolLogs.map((log, i) => (
                                  <div key={i} className="text-zinc-300 break-all flex gap-2 animate-in slide-in-from-left-2 fade-in duration-300">
-                                   <span className="text-red-500 opacity-50 select-none">$</span>
+                                   <span className="text-orange-700 opacity-50 select-none">$</span>
                                    <span>{log}</span>
                                  </div>
                                ))}
@@ -580,13 +620,19 @@ export default function App() {
       </main>
 
       {/* Floating Prompt Bar */}
-      <PromptBar 
-        onSend={handleExecute} 
-        isLoading={state.status === 'analyzing' || state.status === 'executing_tools' || state.status === 'uploading'}
-        hasImage={!!stagedImage || !!state.imagePreview}
-        onFileUpload={handleFileUpload}
-        onTranscriptionResult={(text) => setTranscribedVoiceText(text)}
-      />
+      <div className="fixed left-0 right-0 bottom-0 z-30 flex justify-center pb-8 pointer-events-none">
+        <div className="w-full max-w-3xl px-4 pointer-events-auto">
+          <div className="rounded-2xl bg-gradient-to-r from-teal-900 via-blue-900 to-black/80 border border-teal-700/40 shadow-xl p-2">
+            <PromptBar 
+              onSend={handleExecute} 
+              isLoading={state.status === 'analyzing' || state.status === 'executing_tools' || state.status === 'uploading'}
+              hasImage={!!stagedImage || !!state.imagePreview}
+              onFileUpload={handleFileUpload}
+              onTranscriptionResult={(text) => setTranscribedVoiceText(text)}
+            />
+          </div>
+        </div>
+      </div>
 
     </div>
   );
