@@ -1,0 +1,7 @@
+{
+  "name": "Konnect-Ai Orchestrator",
+  "description": "A multimodal AI agent interface for orchestrating complex software development workflows across Jira, GitHub, Google Docs, and Slack.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
