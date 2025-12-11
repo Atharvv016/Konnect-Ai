@@ -76,4 +76,93 @@ export interface ApiConfig {
   jiraToken: string;
   jiraProjectKey: string;
   gmailAddress: string;
+  autoSyncLogs?: boolean; // when true and user signed in, logs sync to Firestore
+  customAppName?: string; // Name of the custom app/tool
+  customAppApiKey?: string; // API key for the custom app
+}
+
+// Ecosystem: File Transfer
+export interface FileTransfer {
+  id: string;
+  fileName: string;
+  fileSize: number;
+  base64Data: string;
+  fromDevice: string;
+  toDevice: string;
+  timestamp: number;
+}
+
+// Ecosystem: Notifications from Mobile
+export interface NotificationItem {
+  id: string;
+  type: 'sms' | 'app';
+  sender: string;
+  title: string;
+  body: string;
+  timestamp: number;
+  fromDevice: string;
+  icon?: string;
+}
+
+// Ecosystem: Media Control
+export interface MediaState {
+  isPlaying: boolean;
+  track?: string;
+  artist?: string;
+  device: string;
+}
+
+// Reminders: Task scheduling with Gemini execution (extended below)
+
+// Recurrence structure for reminders
+export type RecurrenceType = 'none' | 'daily' | 'weekly' | 'interval';
+
+export interface RecurrenceSpec {
+  type: RecurrenceType;
+  // For 'interval' this is number of days between reminders (e.g., 3 => every 3 days)
+  intervalDays?: number;
+  // For 'weekly' this is array of weekdays [0..6] where 0 = Sunday
+  weekdays?: number[];
+}
+
+// Extend Reminder with optional recurrence and snooze
+export interface Reminder {
+  id: string;
+  title: string;
+  description: string;
+  executeTime: number; // Unix timestamp
+  status: 'pending' | 'executed' | 'failed' | 'cancelled';
+  taskPrompt: string; // Instructions for Gemini to execute
+  createdAt: number;
+  executedAt?: number;
+  result?: string; // Execution result from Gemini
+  errorMessage?: string;
+  recurrence?: RecurrenceSpec; // optional recurrence rule
+  // If snoozed, executeTime will reflect the snoozed time; keep an explicit snoozedUntil for convenience
+  snoozedUntil?: number;
+  // Optional attachments and recorded audio
+  attachments?: Attachment[];
+  audio?: ReminderAudio;
+}
+
+// Attachment and audio types for reminders
+export interface Attachment {
+  id: string;
+  fileName: string;
+  fileSize: number;
+  mimeType?: string;
+  url?: string; // storage URL after upload
+}
+
+export interface ReminderAudio {
+  id: string;
+  url?: string;
+  mimeType?: string;
+  durationMs?: number;
+}
+
+export interface ReminderState {
+  reminders: Reminder[];
+  isLoading: boolean;
+  error?: string;
 }

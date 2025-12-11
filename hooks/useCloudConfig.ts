@@ -15,6 +15,8 @@ const DEFAULT_CONFIG: ApiConfig = {
   jiraProjectKey: '',
   gmailAddress: ''
 };
+// Ensure default opts include autoSyncLogs enabled
+DEFAULT_CONFIG.autoSyncLogs = true;
 
 export const useCloudConfig = () => {
   const [user, setUser] = useState<User | null>(null);

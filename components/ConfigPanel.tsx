@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ApiConfig } from '../types';
 import { Settings, Save, X, Key, Github, Slack, Trello, Cloud, LogOut, Loader2, Mail } from 'lucide-react';
 import { User } from 'firebase/auth';
+import { AnimatedSwitch } from './AnimatedSwitch';
 
 interface ConfigPanelProps {
   isOpen: boolean;
@@ -43,7 +44,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex justify-end transition-opacity">
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-[80] flex justify-end transition-opacity">
       <div className="w-full max-w-md bg-black/90 backdrop-blur-2xl border-l border-white/10 h-full shadow-2xl overflow-y-auto animate-in slide-in-from-right duration-300">
         <div className="p-6">
           
@@ -101,6 +102,16 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                  <div className="flex items-center gap-2 text-[10px] text-red-500 bg-red-600/10 px-2 py-1 rounded border border-red-600/20">
                     <Cloud size={10} />
                     <span>Configuration synced with Cloud Firestore</span>
+                 </div>
+                 <div className="mt-4 flex items-center justify-between">
+                   <div>
+                     <div className="text-sm font-medium text-zinc-200">Cloud Logging</div>
+                     <div className="text-xs text-zinc-500">Automatically sync orchestration logs to your cloud account when signed in.</div>
+                   </div>
+                   <AnimatedSwitch
+                     checked={!!localConfig.autoSyncLogs}
+                     onChange={(checked) => setLocalConfig(prev => ({ ...prev, autoSyncLogs: checked }))}
+                   />
                  </div>
                </div>
              )}
@@ -244,6 +255,40 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     className="w-full pl-9 pr-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
                   />
                 </div>
+              </div>
+            </div>
+
+            {/* Configure Your Own App Section */}
+            <div className="space-y-4">
+              <h3 className="text-sm font-semibold text-zinc-300 flex items-center gap-2 pb-2 border-b border-white/5">
+                <span className="text-red-500">⚙️</span> Configure Your Own App
+              </h3>
+              <p className="text-xs text-zinc-500">Connect to any external tool or API by providing its name and authentication key.</p>
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-500">App Name</label>
+                <input
+                  type="text"
+                  name="customAppName"
+                  placeholder="e.g. Linear, Notion, Zapier"
+                  value={localConfig.customAppName || ''}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-xs font-medium text-zinc-500">API Key or Auth Token</label>
+                <div className="relative">
+                  <Key className="w-4 h-4 absolute left-3 top-2.5 text-zinc-600" />
+                  <input
+                    type="password"
+                    name="customAppApiKey"
+                    placeholder="Enter your API key securely"
+                    value={localConfig.customAppApiKey || ''}
+                    onChange={handleChange}
+                    className="w-full pl-9 pr-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
+                  />
+                </div>
+                <p className="text-[10px] text-zinc-600">Securely stored and encrypted when you save.</p>
               </div>
             </div>
 

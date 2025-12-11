@@ -5,6 +5,7 @@ import { executeTools } from './services/toolService';
 import { playPCM } from './utils/audioHelpers';
 import { useDeviceMesh } from './hooks/useDeviceMesh';
 import { useCloudConfig } from './hooks/useCloudConfig'; // New Cloud Hook
+import { useReminders } from './hooks/useReminders'; // New Reminders Hook
 import { PlanViewer } from './components/PlanViewer';
 import { ResultsViewer } from './components/ResultsViewer';
 import { GovernancePanel } from './components/GovernancePanel';
@@ -12,7 +13,12 @@ import { ConfigPanel } from './components/ConfigPanel';
 import { PromptBar } from './components/PromptBar';
 import { DeviceMeshList } from './components/DeviceMeshList';
 import { QRCodeConnectModal } from './components/QRCodeConnectModal';
-import { Bot, Upload, Loader2, Sparkles, AlertCircle, Settings, Terminal, XCircle, LayoutList, Command, Laptop, ChevronDown, Clipboard, QrCode } from 'lucide-react';
+import { Bot, Upload, Loader2, Sparkles, AlertCircle, Settings, Terminal, XCircle, LayoutList, Command, Laptop, ChevronDown, Clipboard, QrCode, Clock } from 'lucide-react';
+import ChangeLogPanel from './components/ChangeLogPanel';
+import ChangeLogButton from './components/ChangeLogButton';
+import NotificationHub from './components/NotificationHub';
+import { RemindersPanel } from './components/RemindersPanel';
+import { addLog } from './services/changeLog';
 
 const blobToBase64 = (blob: Blob): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -32,17 +38,34 @@ export default function App() {
   const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [isMeshListOpen, setIsMeshListOpen] = useState(false);
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
+  const [isLogOpen, setIsLogOpen] = useState(false);
+  const [isRemindersOpen, setIsRemindersOpen] = useState(false);
+  const [logToast, setLogToast] = useState<{show: boolean; message: string} | null>(null);
   
   // Replaced local useState/useEffect with Cloud Hook
   const { config, user, isSyncing, signIn, signOut, saveConfig } = useCloudConfig();
+  const { reminders, addReminder, deleteReminder, snoozeReminder, updateRecurrence } = useReminders();
   
   const [stagedImage, setStagedImage] = useState<string | null>(null);
   const [clipboardToast, setClipboardToast] = useState<{show: boolean, source: string} | null>(null);
   const [isDraggingOver, setIsDraggingOver] = useState(false);
   const [transcribedVoiceText, setTranscribedVoiceText] = useState<string | null>(null);
+  const [dismissedNotifications, setDismissedNotifications] = useState<string[]>([]);
   
   // Initialize Device Mesh Hook
-  const { isConnected, onlineDevices, sendHandoff, lastClipboardEvent, toggleDemoMode } = useDeviceMesh();
+  const { 
+    isConnected, 
+    onlineDevices, 
+    sendHandoff, 
+    lastClipboardEvent, 
+    toggleDemoMode,
+    notifications,
+    mediaStates,
+    sendFileTransfer,
+    sendMediaCommand,
+    sendQuickReply,
+    isDemoMode
+  } = useDeviceMesh();
 
   // Listen for clipboard events to show toast
   useEffect(() => {
@@ -54,6 +77,25 @@ export default function App() {
       return () => clearTimeout(timer);
     }
   }, [lastClipboardEvent]);
+
+  // Simulate mobile notifications in demo mode
+  useEffect(() => {
+    if (!isDemoMode) return;
+    const interval = setInterval(() => {
+      const types: Array<'sms' | 'app'> = ['sms', 'app'];
+      const senders = ['Sarah', 'Boss', 'Mom', 'Friend'];
+      const messages = ['Hey, how are you?', 'Can you check the report?', 'Love you!', 'See you later'];
+      const apps = ['Instagram', 'Slack', 'Twitter', 'Telegram'];
+      
+      const type = types[Math.floor(Math.random() * types.length)];
+      const sender = type === 'sms' ? senders[Math.floor(Math.random() * senders.length)] : apps[Math.floor(Math.random() * apps.length)];
+      const message = messages[Math.floor(Math.random() * messages.length)];
+      
+      // This would normally come from socket, but in demo we simulate it
+      console.log('📱 [Demo] Simulated notification from', sender);
+    }, 15000); // Every 15 seconds
+    return () => clearInterval(interval);
+  }, [isDemoMode]);
 
   const handleFileUpload = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -245,6 +287,22 @@ export default function App() {
         response: completedResponse
       });
 
+      try {
+        const details = {
+          prompt: promptText,
+          hasImage: !!stagedImage,
+          detectedComponent: completedResponse.executionResults?.detectedComponent,
+          toolLogs: completedResponse.executionResults?.toolLogs?.slice(-10) // last 10 logs
+        };
+        // Respect user config for auto sync
+        const shouldSync = !!(user && config && config.autoSyncLogs);
+        await addLog({ title: 'Orchestration completed', details: JSON.stringify(details, null, 2) }, shouldSync ? user?.uid : undefined);
+        setLogToast({ show: true, message: 'Saved orchestration to docs' });
+        setTimeout(() => setLogToast(null), 3000);
+      } catch (e) {
+        console.error('Failed to write change log', e);
+      }
+
       if (audioBlob) {
          try {
            let summary = `Orchestration complete. I have created a Jira ticket for the ${completedResponse.executionResults.detectedComponent} issue and notified the team on Slack.`;
@@ -322,6 +380,16 @@ export default function App() {
         </div>
       )}
 
+      {/* Log saved toast */}
+      {logToast && logToast.show && (
+        <div className="fixed bottom-28 left-1/2 transform -translate-x-1/2 z-60 animate-in slide-in-from-bottom-2">
+          <div className="bg-black/80 backdrop-blur-xl border border-cyan-600/30 text-zinc-100 px-4 py-2 rounded-full shadow-2xl flex items-center gap-2">
+            <Terminal size={14} className="text-cyan-400" />
+            <span className="text-sm font-medium">{logToast.message}</span>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-black/40 backdrop-blur-md border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between relative">
@@ -361,6 +429,9 @@ export default function App() {
                   devices={onlineDevices}
                   onSendToDevice={handleManualHandoff}
                   onToggleDemo={toggleDemoMode}
+                  onSendFile={(deviceId, fileName, base64Data) => sendFileTransfer(deviceId, fileName, base64Data)}
+                  mediaStates={mediaStates}
+                  onMediaCommand={sendMediaCommand}
                 />
              </div>
 
@@ -372,6 +443,8 @@ export default function App() {
                <QrCode size={14} />
                <span>Connect Mobile</span>
              </button>
+
+             {/* Reminders: accessible from hero area */}
 
              {state.status === 'complete' && (
                <button 
@@ -458,10 +531,13 @@ export default function App() {
                   <div className="font-medium text-zinc-200 text-sm">Upload Diagram</div>
                   <div className="text-xs text-zinc-500 mt-1">Analyze flows visually</div>
                </button>
-               <button className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-red-600/30 hover:shadow-lg hover:shadow-red-600/5 cursor-default">
-                  <Sparkles className="w-5 h-5 text-red-500 mb-3 group-hover:scale-110 transition-transform" />
-                  <div className="font-medium text-zinc-200 text-sm">Auto-Detect Bugs</div>
-                  <div className="text-xs text-zinc-500 mt-1">From Jira screenshots</div>
+               <button
+                 onClick={() => setIsRemindersOpen(true)}
+                 className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-red-600/30 hover:shadow-lg hover:shadow-red-600/5"
+               >
+                 <Clock className="w-5 h-5 text-red-500 mb-3 group-hover:scale-110 transition-transform" />
+                 <div className="font-medium text-zinc-200 text-sm">Reminders</div>
+                 <div className="text-xs text-zinc-500 mt-1">Schedule tasks & auto-run</div>
                </button>
                <button className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-red-600/30 hover:shadow-lg hover:shadow-red-600/5 cursor-default">
                   <Command className="w-5 h-5 text-red-500 mb-3 group-hover:scale-110 transition-transform" />
@@ -586,6 +662,31 @@ export default function App() {
         hasImage={!!stagedImage || !!state.imagePreview}
         onFileUpload={handleFileUpload}
         onTranscriptionResult={(text) => setTranscribedVoiceText(text)}
+      />
+
+      {/* Change Log viewer toggle (bottom-left) */}
+      <div className="fixed left-4 bottom-6 z-60">
+        <ChangeLogButton onClick={() => setIsLogOpen(true)} />
+      </div>
+
+      <ChangeLogPanel isOpen={isLogOpen} onClose={() => setIsLogOpen(false)} />
+
+      {/* Notification Hub */}
+      <NotificationHub 
+        notifications={notifications.filter(n => !dismissedNotifications.includes(n.id))}
+        onQuickReply={sendQuickReply}
+        onDismiss={(id) => setDismissedNotifications(prev => [...prev, id])}
+      />
+
+      {/* Reminders Panel */}
+      <RemindersPanel 
+        isOpen={isRemindersOpen}
+        onClose={() => setIsRemindersOpen(false)}
+        reminders={reminders}
+        onAddReminder={addReminder}
+        onDeleteReminder={deleteReminder}
+        onSnoozeReminder={snoozeReminder}
+        onUpdateRecurrence={updateRecurrence}
       />
 
     </div>

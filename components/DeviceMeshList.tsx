@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { DeviceInfo } from '../types';
+import { DeviceInfo, MediaState } from '../types';
 import { Laptop, Smartphone, Globe, Monitor, X, Radio, Share2, ArrowRight, Link, Type, Play, Square } from 'lucide-react';
+import KonnectDrop from './KonnectDrop';
+import MediaWidget from './MediaWidget';
 
 interface DeviceMeshListProps {
   isOpen: boolean;
@@ -8,6 +10,9 @@ interface DeviceMeshListProps {
   devices: DeviceInfo[];
   onSendToDevice: (deviceId: string, type: 'url' | 'clipboard', content: string) => void;
   onToggleDemo: () => void;
+  onSendFile?: (deviceId: string, file: File) => Promise<void>;
+  mediaStates?: Map<string, MediaState>;
+  onMediaCommand?: (deviceId: string, command: 'play' | 'pause' | 'next' | 'prev') => void;
 }
 
 const getDeviceIcon = (type: string) => {
@@ -137,7 +142,7 @@ export const DeviceMeshList: React.FC<DeviceMeshListProps> = ({ isOpen, onClose,
 
                   {/* Input Area when selected */}
                   {isSelected && (
-                    <div className="mt-1 animate-in slide-in-from-top-1 duration-200">
+                    <div className="mt-1 space-y-2 animate-in slide-in-from-top-1 duration-200">
                        <div className="flex items-center gap-1 bg-black/50 border border-zinc-700 rounded-md p-1 pr-1.5 focus-within:border-red-600/50 transition-colors">
                           <div className="pl-2 text-zinc-500">
                              {inputValue.length > 0 && isUrl(inputValue) ? <Link size={12}/> : <Type size={12}/>}
@@ -159,7 +164,23 @@ export const DeviceMeshList: React.FC<DeviceMeshListProps> = ({ isOpen, onClose,
                              <ArrowRight size={12} />
                           </button>
                        </div>
+                       {onSendFile && (
+                         <KonnectDrop 
+                           deviceId={device.deviceId} 
+                           deviceName={device.deviceType}
+                           onFileDrop={(file) => onSendFile(device.deviceId, file)}
+                         />
+                       )}
                     </div>
+                  )}
+                  {!device.isCurrent && mediaStates && mediaStates.has(device.deviceId) && onMediaCommand && (
+                    <MediaWidget
+                      mediaState={mediaStates.get(device.deviceId)}
+                      onPlay={() => onMediaCommand(device.deviceId, 'play')}
+                      onPause={() => onMediaCommand(device.deviceId, 'pause')}
+                      onNext={() => onMediaCommand(device.deviceId, 'next')}
+                      onPrev={() => onMediaCommand(device.deviceId, 'prev')}
+                    />
                   )}
                 </div>
               );
