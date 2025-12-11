@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 // @ts-ignore - Importing from CDN defined in importmap
 import { io, Socket } from 'socket.io-client';
-import { DeviceInfo } from '../types';
+import { DeviceInfo, FileTransfer, NotificationItem, MediaState } from '../types';
 
 const SIGNALING_URL = 'http://localhost:3001';
 
@@ -11,6 +11,9 @@ export const useDeviceMesh = () => {
   const [connectionStatus, setConnectionStatus] = useState<'connected' | 'disconnected'>('disconnected');
   const [lastClipboardEvent, setLastClipboardEvent] = useState<{ content: string; source: string; time: number } | null>(null);
   const [isDemoMode, setIsDemoMode] = useState(false);
+  const [fileTransfers, setFileTransfers] = useState<FileTransfer[]>([]);
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
+  const [mediaStates, setMediaStates] = useState<Map<string, MediaState>>(new Map());
   
   // Persist device ID across reloads if possible, or generate new one
   const myDeviceId = useRef('web-dashboard-' + Math.random().toString(36).substr(2, 5));
@@ -102,6 +105,28 @@ export const useDeviceMesh = () => {
         }
       });
 
+      // Listen for file transfers
+      newSocket.on('file_transfer', (transfer: FileTransfer) => {
+        console.log('📁 File transfer received:', transfer.fileName);
+        setFileTransfers(prev => [transfer, ...prev]);
+        // Auto-cleanup after 30 seconds
+        setTimeout(() => {
+          setFileTransfers(prev => prev.filter(f => f.id !== transfer.id));
+        }, 30000);
+      });
+
+      // Listen for notifications from mobile
+      newSocket.on('notification_sync', (notification: NotificationItem) => {
+        console.log('🔔 Notification received:', notification.title);
+        setNotifications(prev => [notification, ...prev]);
+      });
+
+      // Listen for media control updates
+      newSocket.on('media_control', (media: MediaState) => {
+        console.log('🎵 Media state update:', media);
+        setMediaStates(prev => new Map(prev).set(media.device, media));
+      });
+
       setSocket(newSocket);
 
       return () => { newSocket.close(); };
@@ -123,6 +148,42 @@ export const useDeviceMesh = () => {
     return false;
   }, [socket, connectionStatus, isDemoMode]);
 
+  const sendFileTransfer = useCallback((targetDeviceId: string, fileName: string, base64Data: string) => {
+    if (isDemoMode) {
+      console.log(`[DEMO MODE] Sending file ${fileName} to ${targetDeviceId}`);
+      return true;
+    }
+    if (socket && connectionStatus === 'connected') {
+      socket.emit('file_transfer', { targetDeviceId, fileName, base64Data });
+      return true;
+    }
+    return false;
+  }, [socket, connectionStatus, isDemoMode]);
+
+  const sendMediaCommand = useCallback((deviceId: string, command: 'play' | 'pause' | 'next' | 'prev') => {
+    if (isDemoMode) {
+      console.log(`[DEMO MODE] Media command ${command} to ${deviceId}`);
+      return true;
+    }
+    if (socket && connectionStatus === 'connected') {
+      socket.emit('media_command', { deviceId, command });
+      return true;
+    }
+    return false;
+  }, [socket, connectionStatus, isDemoMode]);
+
+  const sendQuickReply = useCallback((notificationId: string, reply: string) => {
+    if (isDemoMode) {
+      console.log(`[DEMO MODE] Quick reply to notification:`, reply);
+      return true;
+    }
+    if (socket && connectionStatus === 'connected') {
+      socket.emit('notification_reply', { notificationId, reply });
+      return true;
+    }
+    return false;
+  }, [socket, connectionStatus, isDemoMode]);
+
   return { 
     isConnected: connectionStatus === 'connected', 
     onlineDevices, 
@@ -130,6 +191,12 @@ export const useDeviceMesh = () => {
     myDeviceId: myDeviceId.current,
     lastClipboardEvent,
     toggleDemoMode,
-    isDemoMode
+    isDemoMode,
+    fileTransfers,
+    notifications,
+    mediaStates,
+    sendFileTransfer,
+    sendMediaCommand,
+    sendQuickReply
   };
 };
