@@ -35,7 +35,7 @@ export const ChangeLogPanel: React.FC<Props> = ({ isOpen, onClose }) => {
         <div className="flex items-center justify-between px-4 py-3 border-b border-white/5">
           <h3 className="text-sm font-bold text-white">Change Log</h3>
           <div className="flex items-center gap-2">
-            <button onClick={async () => { await clearLogs(user?.uid); setEntries([]); }} title="Clear logs" className="text-zinc-400 hover:text-red-500 p-1">
+            <button onClick={async () => { await clearLogs(user?.uid); setEntries([]); }} title="Clear logs" className="text-zinc-400 hover:text-blue-500 p-1">
               <Trash2 size={14} />
             </button>
             <button onClick={onClose} className="text-zinc-400 hover:text-white p-1">

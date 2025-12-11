@@ -66,13 +66,13 @@ const NotificationHub: React.FC<Props> = ({ notifications, onQuickReply, onDismi
                   if (e.key === 'Enter') handleSendReply(notif.id);
                 }}
                 placeholder="Quick reply..."
-                className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded text-xs text-white focus:ring-1 focus:ring-red-600 outline-none"
+                className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded text-xs text-white focus:ring-1 focus:ring-blue-600 outline-none"
                 autoFocus
               />
               <div className="flex gap-2">
                 <button
                   onClick={() => handleSendReply(notif.id)}
-                  className="flex-1 px-3 py-1 bg-red-600 hover:bg-red-700 text-white text-xs rounded font-medium transition-colors"
+                  className="flex-1 px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded font-medium transition-colors"
                 >
                   Send
                 </button>

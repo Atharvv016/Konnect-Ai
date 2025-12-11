@@ -35,7 +35,7 @@ export const GovernancePanel: React.FC<GovernancePanelProps> = ({ governance }) 
         {/* Critique Section */}
         <div className="flex gap-4">
            <div className="mt-1">
-             <Activity className="w-4 h-4 text-red-600" />
+             <Activity className="w-4 h-4 text-blue-600" />
            </div>
            <div>
              <h4 className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-1">Self-Critique</h4>

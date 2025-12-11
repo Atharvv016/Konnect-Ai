@@ -62,11 +62,11 @@ export const KonnectDrop: React.FC<Props> = ({ deviceId, deviceName, onFileDrop 
       onDrop={handleDrop}
       className={`border-2 border-dashed rounded-lg p-3 text-center cursor-pointer transition-all mt-2 ${
         isDragging
-          ? 'border-red-500 bg-red-600/10'
+          ? 'border-blue-500 bg-blue-600/10'
           : status === 'success'
           ? 'border-emerald-500 bg-emerald-600/10'
           : status === 'error'
-          ? 'border-red-500 bg-red-600/10'
+          ? 'border-blue-500 bg-blue-600/10'
           : 'border-white/20 hover:border-white/40 bg-white/5'
       }`}
     >
@@ -88,8 +88,8 @@ export const KonnectDrop: React.FC<Props> = ({ deviceId, deviceName, onFileDrop 
       )}
       {status === 'error' && (
         <>
-          <AlertCircle size={16} className="text-red-400 mx-auto mb-1" />
-          <div className="text-xs text-red-300">{error}</div>
+          <AlertCircle size={16} className="text-blue-400 mx-auto mb-1" />
+          <div className="text-xs text-blue-300">{error}</div>
         </>
       )}
     </div>

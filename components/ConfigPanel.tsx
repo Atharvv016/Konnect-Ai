@@ -50,7 +50,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
           
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <Settings className="w-5 h-5 text-red-600" />
+              <Settings className="w-5 h-5 text-blue-600" />
               Settings
             </h2>
             <button onClick={onClose} className="text-zinc-500 hover:text-white transition-colors">
@@ -62,10 +62,10 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
           <div className="mb-8 bg-zinc-900/40 rounded-xl p-4 border border-white/5">
              <div className="flex items-center justify-between mb-3">
                <h3 className="text-sm font-semibold text-zinc-200 flex items-center gap-2">
-                 <Cloud className="w-4 h-4 text-red-600" /> 
+                 <Cloud className="w-4 h-4 text-blue-600" /> 
                  Sync Everywhere
                </h3>
-               {isSyncing && <Loader2 className="w-3 h-3 text-red-600 animate-spin" />}
+               {isSyncing && <Loader2 className="w-3 h-3 text-blue-600 animate-spin" />}
              </div>
              
              {!user ? (
@@ -87,7 +87,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     {user.photoURL ? (
                       <img src={user.photoURL} alt="User" className="w-8 h-8 rounded-full border border-white/10" />
                     ) : (
-                      <div className="w-8 h-8 rounded-full bg-red-600/20 flex items-center justify-center text-red-500 font-bold text-xs">
+                      <div className="w-8 h-8 rounded-full bg-blue-600/20 flex items-center justify-center text-blue-500 font-bold text-xs">
                         {user.displayName?.charAt(0)}
                       </div>
                     )}
@@ -95,11 +95,11 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                       <div className="text-xs font-medium text-white truncate">{user.displayName}</div>
                       <div className="text-[10px] text-zinc-500 truncate">{user.email}</div>
                     </div>
-                    <button onClick={onSignOut} className="text-zinc-500 hover:text-red-600 p-2" title="Sign Out">
+                    <button onClick={onSignOut} className="text-zinc-500 hover:text-blue-600 p-2" title="Sign Out">
                       <LogOut size={16} />
                     </button>
                  </div>
-                 <div className="flex items-center gap-2 text-[10px] text-red-500 bg-red-600/10 px-2 py-1 rounded border border-red-600/20">
+                 <div className="flex items-center gap-2 text-[10px] text-blue-500 bg-blue-600/10 px-2 py-1 rounded border border-blue-600/20">
                     <Cloud size={10} />
                     <span>Configuration synced with Cloud Firestore</span>
                  </div>
@@ -131,7 +131,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                   placeholder="agent@company.com"
                   value={localConfig.gmailAddress}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
+                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-blue-600 focus:border-blue-600 outline-none placeholder:text-zinc-700"
                 />
                 <p className="text-[10px] text-zinc-600">Simulates the 'From' address for drafted emails.</p>
               </div>
@@ -151,7 +151,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     placeholder="e.g. facebook"
                     value={localConfig.githubOwner}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
+                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-blue-600 focus:border-blue-600 outline-none placeholder:text-zinc-700"
                   />
                 </div>
                 <div className="space-y-1">
@@ -162,7 +162,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     placeholder="e.g. react"
                     value={localConfig.githubRepo}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
+                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-blue-600 focus:border-blue-600 outline-none placeholder:text-zinc-700"
                   />
                 </div>
               </div>
@@ -176,7 +176,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     placeholder="ghp_..."
                     value={localConfig.githubToken}
                     onChange={handleChange}
-                    className="w-full pl-9 pr-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
+                    className="w-full pl-9 pr-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-blue-600 focus:border-blue-600 outline-none placeholder:text-zinc-700"
                   />
                 </div>
                 <p className="text-[10px] text-zinc-600">Used to fetch real commit data.</p>
@@ -196,7 +196,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                   placeholder="https://hooks.slack.com/services/..."
                   value={localConfig.slackWebhook}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
+                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-blue-600 focus:border-blue-600 outline-none placeholder:text-zinc-700"
                 />
                 <p className="text-[10px] text-zinc-600">Used to post the drafted announcement message.</p>
               </div>
@@ -215,7 +215,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                   placeholder="https://company.atlassian.net"
                   value={localConfig.jiraDomain}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
+                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-blue-600 focus:border-blue-600 outline-none placeholder:text-zinc-700"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -227,7 +227,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     placeholder="me@company.com"
                     value={localConfig.jiraEmail}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
+                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-blue-600 focus:border-blue-600 outline-none placeholder:text-zinc-700"
                   />
                 </div>
                 <div className="space-y-1">
@@ -238,7 +238,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     placeholder="e.g. PROJ"
                     value={localConfig.jiraProjectKey}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
+                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-blue-600 focus:border-blue-600 outline-none placeholder:text-zinc-700"
                   />
                 </div>
               </div>
@@ -252,7 +252,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     placeholder="Atlassian API Token"
                     value={localConfig.jiraToken}
                     onChange={handleChange}
-                    className="w-full pl-9 pr-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
+                    className="w-full pl-9 pr-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-blue-600 focus:border-blue-600 outline-none placeholder:text-zinc-700"
                   />
                 </div>
               </div>
@@ -261,7 +261,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
             {/* Configure Your Own App Section */}
             <div className="space-y-4">
               <h3 className="text-sm font-semibold text-zinc-300 flex items-center gap-2 pb-2 border-b border-white/5">
-                <span className="text-red-500">⚙️</span> Configure Your Own App
+                <span className="text-blue-500">⚙️</span> Configure Your Own App
               </h3>
               <p className="text-xs text-zinc-500">Connect to any external tool or API by providing its name and authentication key.</p>
               <div className="space-y-1">
@@ -272,7 +272,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                   placeholder="e.g. Linear, Notion, Zapier"
                   value={localConfig.customAppName || ''}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
+                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-blue-600 focus:border-blue-600 outline-none placeholder:text-zinc-700"
                 />
               </div>
               <div className="space-y-1">
@@ -285,7 +285,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     placeholder="Enter your API key securely"
                     value={localConfig.customAppApiKey || ''}
                     onChange={handleChange}
-                    className="w-full pl-9 pr-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-red-600 focus:border-red-600 outline-none placeholder:text-zinc-700"
+                    className="w-full pl-9 pr-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 focus:ring-1 focus:ring-blue-600 focus:border-blue-600 outline-none placeholder:text-zinc-700"
                   />
                 </div>
                 <p className="text-[10px] text-zinc-600">Securely stored and encrypted when you save.</p>

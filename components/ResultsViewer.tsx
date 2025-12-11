@@ -13,15 +13,15 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results }) => {
       {/* Simulation Summary Card */}
       <div className="bg-black/50 backdrop-blur-xl rounded-2xl border border-white/10 p-5 shadow-lg shadow-black/40">
         <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-4 flex items-center gap-2">
-            <span className="w-1 h-1 bg-red-600 rounded-full shadow-[0_0_8px_rgba(201,42,42,0.8)]"></span> Detected Context
+            <span className="w-1 h-1 bg-blue-600 rounded-full shadow-[0_0_8px_rgba(37,99,235,0.8)]"></span> Detected Context
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div className="bg-red-500/5 p-3 rounded-xl border border-red-500/10 flex items-start gap-3 backdrop-blur-sm">
-             <div className="bg-red-500/10 p-1.5 rounded-lg text-red-400">
+          <div className="bg-blue-500/5 p-3 rounded-xl border border-blue-500/10 flex items-start gap-3 backdrop-blur-sm">
+             <div className="bg-blue-500/10 p-1.5 rounded-lg text-blue-400">
                 <AlertTriangle size={16} />
              </div>
              <div>
-               <div className="text-xs text-red-300/80 font-medium mb-0.5">Priority Bug</div>
+               <div className="text-xs text-blue-300/80 font-medium mb-0.5">Priority Bug</div>
                <div className="text-sm text-zinc-200 font-medium">{results.bugSummary}</div>
              </div>
           </div>
@@ -58,9 +58,9 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results }) => {
       {/* Simulated Google Doc */}
       <div className="bg-white rounded-2xl overflow-hidden shadow-xl border border-zinc-800 opacity-95">
         <div className="bg-black px-4 py-3 flex items-center gap-3 border-b border-zinc-800">
-          <FileText className="text-red-600 w-4 h-4" />
+          <FileText className="text-blue-600 w-4 h-4" />
           <div className="text-zinc-200 font-medium text-sm">Google Docs Simulation</div>
-          <div className="ml-auto text-red-600 text-[10px] bg-red-950/30 px-2 py-0.5 rounded-full border border-red-950/50">
+          <div className="ml-auto text-blue-600 text-[10px] bg-blue-950/30 px-2 py-0.5 rounded-full border border-blue-950/50">
             {results.docEntryId}
           </div>
         </div>
@@ -78,7 +78,7 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results }) => {
       {results.gmailBody && (
         <div className="bg-white rounded-2xl overflow-hidden shadow-xl border border-zinc-800 opacity-95">
           <div className="bg-black px-4 py-3 flex items-center gap-3 border-b border-zinc-800">
-            <Mail className="text-red-500 w-4 h-4" />
+            <Mail className="text-blue-500 w-4 h-4" />
             <div className="text-zinc-200 font-medium text-sm">Gmail Simulation</div>
             <div className="ml-auto text-zinc-500 text-[10px] font-mono">
               Sent
@@ -113,7 +113,7 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results }) => {
         </div>
         <div className="p-5 bg-zinc-900">
           <div className="flex gap-3">
-            <div className="w-9 h-9 rounded bg-red-600 flex items-center justify-center text-white font-bold flex-shrink-0 text-sm">
+            <div className="w-9 h-9 rounded bg-blue-600 flex items-center justify-center text-white font-bold flex-shrink-0 text-sm">
               CP
             </div>
             <div className="flex-1">
@@ -126,10 +126,10 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results }) => {
               </div>
               <div className="mt-3 border-l-2 border-zinc-700 pl-3 py-1">
                 <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded bg-red-950/20 flex items-center justify-center">
-                        <FileText size={10} className="text-red-600"/>
+                    <div className="w-4 h-4 rounded bg-blue-950/20 flex items-center justify-center">
+                        <FileText size={10} className="text-blue-600"/>
                     </div>
-                    <div className="text-xs font-medium text-red-600 hover:underline cursor-pointer">
+                    <div className="text-xs font-medium text-blue-600 hover:underline cursor-pointer">
                     Release Notes ({results.docEntryId})
                     </div>
                 </div>
