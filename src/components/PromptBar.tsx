@@ -147,7 +147,7 @@ export const PromptBar: React.FC<PromptBarProps> = ({
           
           {/* Upload Image Button */}
           <div className="relative group">
-            <button className="p-3 text-zinc-400 hover:text-red-500 hover:bg-red-500/10 rounded-full transition-colors" title="Upload Image">
+            <button className="p-3 text-zinc-400 hover:text-blue-400 hover:bg-blue-500/10 rounded-full transition-colors" title="Upload Image">
                 <ImagePlus size={20} />
             </button>
             <input 
@@ -160,7 +160,7 @@ export const PromptBar: React.FC<PromptBarProps> = ({
 
           {/* Upload Video Button */}
           <div className="relative group">
-            <button className="p-3 text-zinc-400 hover:text-red-500 hover:bg-red-500/10 rounded-full transition-colors" title="Upload Video">
+            <button className="p-3 text-zinc-400 hover:text-white hover:bg-zinc-700/20 rounded-full transition-colors" title="Upload Video">
                 <Video size={20} />
             </button>
             <input 
@@ -174,8 +174,8 @@ export const PromptBar: React.FC<PromptBarProps> = ({
           {/* Input Area */}
           <div className="flex-1 min-h-[48px] flex items-center px-2">
             {isRecording ? (
-               <div className="flex-1 flex items-center gap-3 text-red-400 font-medium animate-pulse px-2">
-                  <div className="w-2 h-2 rounded-full bg-red-500" />
+               <div className="flex-1 flex items-center gap-3 text-blue-300 font-medium animate-pulse px-2">
+                  <div className="w-2 h-2 rounded-full bg-blue-400" />
                   Recording Voice Command... ({formatTime(recordingTime)})
                </div>
             ) : (
@@ -198,7 +198,7 @@ export const PromptBar: React.FC<PromptBarProps> = ({
               onClick={onToggleSpeech}
               className={`p-3 rounded-full transition-all hidden sm:block ${
                 isSpeechEnabled
-                  ? 'text-red-500 bg-red-500/10'
+                  ? 'text-blue-400 bg-blue-700/20'
                   : 'text-zinc-500 hover:text-zinc-300 hover:bg-white/5'
               }`}
               title={isSpeechEnabled ? "Read Aloud: ON" : "Read Aloud: OFF"}
@@ -212,8 +212,8 @@ export const PromptBar: React.FC<PromptBarProps> = ({
               disabled={isLoading}
               className={`p-3 rounded-full transition-all ${
                 isRecording 
-                  ? 'bg-red-500/20 text-red-500' 
-                  : 'text-zinc-400 hover:text-red-500 hover:bg-red-500/10'
+                  ? 'bg-blue-600/30 text-white' 
+                  : 'text-zinc-400 hover:text-white hover:bg-blue-700/20'
               }`}
             >
               {isRecording ? <StopCircle size={20} /> : <Mic size={20} />}
@@ -225,7 +225,7 @@ export const PromptBar: React.FC<PromptBarProps> = ({
               disabled={isLoading || (text.trim().length === 0 && !isRecording)}
               className={`p-3 rounded-full transition-all ${
                  (text.trim().length > 0 || isRecording) && !isLoading
-                   ? 'bg-red-600 text-white shadow-[0_0_15px_rgba(220,38,38,0.5)] hover:bg-red-500 font-bold' 
+                   ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.5)] hover:bg-blue-500 font-bold' 
                    : 'bg-white/5 text-zinc-600 cursor-not-allowed'
               }`}
             >

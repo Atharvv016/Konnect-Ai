@@ -286,7 +286,7 @@ export default function App() {
 
   return (
     <div 
-      className="min-h-screen font-sans text-zinc-100 selection:bg-red-500/30 selection:text-red-200 relative"
+      className="min-h-screen font-sans text-zinc-100 selection:bg-blue-500/30 selection:text-blue-200 relative"
       onDragOver={handleDragOver}
     >
       
@@ -297,21 +297,21 @@ export default function App() {
             alt="Background" 
             className="w-full h-full object-cover opacity-50 grayscale"
           />
-          {/* Foggy Red Overlay */}
+          {/* Foggy Blue Overlay */}
           <div className="absolute inset-0 bg-gradient-to-br from-black via-black/80 to-black" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(220,38,38,0.15),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.15),transparent_50%)]" />
       </div>
 
       {/* Drag & Drop Overlay */}
       {isDragging && (
         <div 
-            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md border-2 border-dashed border-red-500 m-4 rounded-3xl flex flex-col items-center justify-center animate-in fade-in duration-200"
+            className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md border-2 border-dashed border-blue-500 m-4 rounded-3xl flex flex-col items-center justify-center animate-in fade-in duration-200"
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
         >
-             <div className="bg-red-500/20 p-8 rounded-full shadow-[0_0_50px_rgba(220,38,38,0.3)] animate-bounce">
-                <Upload size={64} className="text-red-500" />
+             <div className="bg-blue-500/20 p-8 rounded-full shadow-[0_0_50px_rgba(59,130,246,0.3)] animate-bounce">
+                <Upload size={64} className="text-blue-400" />
              </div>
              <h2 className="mt-8 text-3xl font-bold text-white tracking-tight">Drop Context</h2>
              <p className="mt-2 text-zinc-400">Release to upload image or video</p>
@@ -332,9 +332,9 @@ export default function App() {
       {/* Clipboard Toast Notification */}
       {clipboardToast && (
         <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 animate-in slide-in-from-top-2 fade-in duration-300">
-           <div className="bg-black/80 backdrop-blur-xl border border-red-500/30 text-zinc-100 px-4 py-2 rounded-full shadow-2xl flex items-center gap-2">
-              <div className="bg-red-500/20 p-1 rounded-full">
-                <Clipboard size={14} className="text-red-400" />
+           <div className="bg-black/80 backdrop-blur-xl border border-blue-500/30 text-zinc-100 px-4 py-2 rounded-full shadow-2xl flex items-center gap-2">
+              <div className="bg-blue-500/20 p-1 rounded-full">
+                <Clipboard size={14} className="text-blue-400" />
               </div>
               <span className="text-sm font-medium">Clipboard synced from Desktop</span>
            </div>
@@ -346,7 +346,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between relative">
           <div className="flex items-center gap-3">
             <div className="bg-white/5 p-2 rounded-lg border border-white/10 backdrop-blur-sm">
-              <KonnectLogo size={24} className="text-red-500" />
+              <KonnectLogo size={24} className="text-blue-500" />
             </div>
             <div>
               <h1 className="text-lg font-bold text-white tracking-tight flex items-center gap-2">
@@ -361,15 +361,15 @@ export default function App() {
                   onClick={() => setIsMeshListOpen(!isMeshListOpen)}
                   className={`hidden md:flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all backdrop-blur-sm ${
                     isMeshListOpen 
-                      ? 'bg-red-950/40 border-red-500/50' 
+                      ? 'bg-blue-950/40 border-blue-500/50' 
                       : 'bg-black/60 border-white/5 hover:bg-black/80'
                   }`}
                 >
-                  <Laptop size={14} className={isConnected ? "text-red-500" : "text-zinc-600"} />
+                  <Laptop size={14} className={isConnected ? "text-blue-500" : "text-zinc-600"} />
                   <span className="text-[10px] font-medium text-zinc-400">
                     {isConnected ? "MESH ACTIVE" : "MESH OFFLINE"}
                   </span>
-                  {isConnected && <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />}
+                  {isConnected && <span className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />}
                   <ChevronDown size={12} className={`text-zinc-500 transition-transform ${isMeshListOpen ? 'rotate-180' : ''}`} />
                 </button>
 
@@ -394,12 +394,12 @@ export default function App() {
              )}
              <button 
                onClick={() => setIsConfigOpen(true)}
-               className="text-zinc-500 hover:text-red-500 transition-colors p-2 rounded-full hover:bg-white/5 relative"
+               className="text-zinc-500 hover:text-blue-400 transition-colors p-2 rounded-full hover:bg-white/5 relative"
                title="Settings"
              >
                <Settings size={20} />
                {user && (
-                 <span className="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-black" />
+                 <span className="absolute top-2 right-2 w-2 h-2 bg-blue-400 rounded-full border border-black" />
                )}
              </button>
           </div>
@@ -410,15 +410,15 @@ export default function App() {
         
         {/* Error Notification */}
         {state.status === 'error' && (
-           <div className="mb-8 bg-red-950/40 backdrop-blur-md border border-red-500/20 rounded-xl p-4 flex items-center gap-4 animate-in slide-in-from-top-2">
-             <div className="bg-red-500/10 p-2 rounded-full">
-               <AlertCircle className="text-red-400 w-5 h-5" />
+           <div className="mb-8 bg-blue-950/40 backdrop-blur-md border border-blue-500/20 rounded-xl p-4 flex items-center gap-4 animate-in slide-in-from-top-2">
+             <div className="bg-blue-500/10 p-2 rounded-full">
+               <AlertCircle className="text-blue-400 w-5 h-5" />
              </div>
              <div className="flex-1 min-w-0">
-               <h3 className="text-sm font-semibold text-red-200">Simulation Failed</h3>
-               <p className="text-sm text-red-300/80 break-words mt-0.5">{state.errorMessage}</p>
+               <h3 className="text-sm font-semibold text-blue-200">Simulation Failed</h3>
+               <p className="text-sm text-blue-300/80 break-words mt-0.5">{state.errorMessage}</p>
              </div>
-             <button onClick={() => setState(prev => ({ ...prev, status: 'idle' }))} className="text-sm font-medium text-red-400 hover:text-red-300 hover:underline">Dismiss</button>
+             <button onClick={() => setState(prev => ({ ...prev, status: 'idle' }))} className="text-sm font-medium text-blue-400 hover:text-blue-300 hover:underline">Dismiss</button>
            </div>
         )}
 
@@ -426,8 +426,8 @@ export default function App() {
         {state.status === 'idle' && !stagedImage && !stagedVideo && !state.imagePreview && (
           <div className="flex flex-col items-center justify-center min-h-[60vh] text-center space-y-8 animate-in fade-in duration-700">
             <div className="relative">
-               <div className="absolute inset-0 bg-red-500 blur-[100px] opacity-10 rounded-full" />
-               <KonnectLogo size={80} className="relative drop-shadow-[0_0_30px_rgba(220,38,38,0.5)]" />
+               <div className="absolute inset-0 bg-blue-500 blur-[100px] opacity-10 rounded-full" />
+               <KonnectLogo size={80} className="relative drop-shadow-[0_0_30px_rgba(59,130,246,0.5)]" />
             </div>
             <div className="space-y-4 max-w-2xl">
               <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white drop-shadow-sm">
@@ -436,21 +436,21 @@ export default function App() {
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full max-w-2xl mt-8">
-               <button onClick={() => document.getElementById('file-upload-hero')?.click()} className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-red-500/30 hover:shadow-lg hover:shadow-red-500/5 cursor-pointer">
-                  <ScanSearch className="w-5 h-5 text-red-500 mb-3 group-hover:scale-110 transition-transform" />
+               <button onClick={() => document.getElementById('file-upload-hero')?.click()} className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 cursor-pointer">
+                  <ScanSearch className="w-5 h-5 text-blue-500 mb-3 group-hover:scale-110 transition-transform" />
                   <div className="font-medium text-zinc-200 text-sm">Analyze Image</div>
                   <div className="text-xs text-zinc-500 mt-1">Upload diagrams or photos</div>
                </button>
                <button 
                  onClick={() => handleExecute('')}
-                 className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-red-500/30 hover:shadow-lg hover:shadow-red-500/5 cursor-pointer"
+                 className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 cursor-pointer"
                >
-                  <Sparkles className="w-5 h-5 text-red-500 mb-3 group-hover:scale-110 transition-transform" />
+                  <Sparkles className="w-5 h-5 text-blue-400 mb-3 group-hover:scale-110 transition-transform" />
                   <div className="font-medium text-zinc-200 text-sm">Run Simulation</div>
                   <div className="text-xs text-zinc-500 mt-1">Generate demo workflow</div>
                </button>
-               <button className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-red-500/30 hover:shadow-lg hover:shadow-red-500/5 cursor-default">
-                  <Command className="w-5 h-5 text-red-500 mb-3 group-hover:scale-110 transition-transform" />
+               <button className="group bg-zinc-900/60 hover:bg-zinc-800/80 border border-white/5 backdrop-blur-sm p-4 rounded-xl text-left transition-all hover:border-blue-500/30 hover:shadow-lg hover:shadow-blue-500/5 cursor-default">
+                  <Command className="w-5 h-5 text-blue-400 mb-3 group-hover:scale-110 transition-transform" />
                   <div className="font-medium text-zinc-200 text-sm">Voice Command</div>
                   <div className="text-xs text-zinc-500 mt-1">Speak your plan</div>
                </button>
@@ -470,10 +470,10 @@ export default function App() {
               <div className="bg-black/40 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden shadow-2xl shadow-black/80">
                 <div className="px-4 py-3 border-b border-white/5 bg-white/5 flex items-center justify-between">
                    <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-                     <Sparkles className="w-3 h-3 text-red-500" />
+                     <Sparkles className="w-3 h-3 text-blue-500" />
                      Context Input
                    </h3>
-                   {state.status === 'analyzing' && <Loader2 className="w-3 h-3 text-red-500 animate-spin" />}
+                   {state.status === 'analyzing' && <Loader2 className="w-3 h-3 text-blue-500 animate-spin" />}
                 </div>
                 
                 <div className="relative group bg-black/40">
@@ -513,8 +513,8 @@ export default function App() {
 
                   {state.status === 'analyzing' && (
                     <div className="absolute inset-0 bg-black/80 flex flex-col items-center justify-center text-zinc-200 backdrop-blur-[2px]">
-                       <Loader2 className="w-8 h-8 animate-spin mb-3 text-red-500" />
-                       <span className="text-sm font-mono tracking-wide text-red-100">ANALYZING INPUT...</span>
+                       <Loader2 className="w-8 h-8 animate-spin mb-3 text-blue-500" />
+                       <span className="text-sm font-mono tracking-wide text-blue-100">ANALYZING INPUT...</span>
                     </div>
                   )}
                 </div>
@@ -554,7 +554,7 @@ export default function App() {
                              <div className="p-4 space-y-2 font-mono text-xs max-h-48 overflow-y-auto custom-scrollbar">
                                {state.response.executionResults.toolLogs.map((log, i) => (
                                  <div key={i} className="text-zinc-300 break-all flex gap-2 animate-in slide-in-from-left-2 fade-in duration-300">
-                                   <span className="text-red-500 opacity-50 select-none">$</span>
+                                   <span className="text-blue-500 opacity-50 select-none">$</span>
                                    <span>{log}</span>
                                  </div>
                                ))}

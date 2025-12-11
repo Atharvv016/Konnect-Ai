@@ -19,7 +19,7 @@ const getSystemIcon = (system: SystemType) => {
     case SystemType.FIGMA: return <Eye className="w-4 h-4 text-zinc-300" />;
     case SystemType.SENTRY: return <Activity className="w-4 h-4 text-zinc-300" />;
     case SystemType.CONFLUENCE: return <BookOpen className="w-4 h-4 text-zinc-300" />;
-    case SystemType.ANALYSIS: return <Search className="w-4 h-4 text-red-500" />;
+    case SystemType.ANALYSIS: return <Search className="w-4 h-4 text-blue-500" />;
     default: return <Search className="w-4 h-4 text-zinc-500" />;
   }
 };
@@ -28,8 +28,8 @@ const getStatusIcon = (status: 'pending' | 'processing' | 'complete') => {
   switch (status) {
     case 'complete':
       return (
-        <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-500/50 flex items-center justify-center z-10 shadow-[0_0_10px_rgba(220,38,38,0.2)] backdrop-blur-sm">
-          <CheckCircle2 className="w-3.5 h-3.5 text-red-500" />
+        <div className="w-6 h-6 rounded-full bg-blue-500/20 border border-blue-500/50 flex items-center justify-center z-10 shadow-[0_0_10px_rgba(59,130,246,0.2)] backdrop-blur-sm">
+          <CheckCircle2 className="w-3.5 h-3.5 text-blue-400" />
         </div>
       );
     case 'processing':

@@ -17,8 +17,8 @@ interface DeviceMeshListProps {
 
 const getDeviceIcon = (type: string) => {
   switch (type) {
-    case 'desktop': return <Monitor className="w-4 h-4 text-red-600" />;
-    case 'mobile': return <Smartphone className="w-4 h-4 text-pink-400" />;
+    case 'desktop': return <Monitor className="w-4 h-4 text-blue-600" />;
+    case 'mobile': return <Smartphone className="w-4 h-4 text-blue-400" />;
     case 'web': return <Globe className="w-4 h-4 text-indigo-400" />;
     default: return <Laptop className="w-4 h-4 text-zinc-400" />;
   }
@@ -65,7 +65,7 @@ export const DeviceMeshList: React.FC<DeviceMeshListProps> = ({ isOpen, onClose,
         {/* Header */}
         <div className="px-4 py-3 border-b border-white/5 bg-white/5 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Radio className="w-4 h-4 text-red-600 animate-pulse" />
+            <Radio className="w-4 h-4 text-blue-600 animate-pulse" />
             <span className="text-xs font-bold text-zinc-100 uppercase tracking-wider">Device Mesh</span>
           </div>
           <button onClick={onClose} className="text-zinc-500 hover:text-white transition-colors">
@@ -80,7 +80,7 @@ export const DeviceMeshList: React.FC<DeviceMeshListProps> = ({ isOpen, onClose,
                <div className="text-xs text-zinc-500">No other devices detected.</div>
                <button 
                 onClick={onToggleDemo}
-                className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-red-500 bg-red-950/30 hover:bg-red-950/50 border border-red-600/20 rounded-md transition-colors"
+                className="inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-blue-500 bg-blue-950/30 hover:bg-blue-950/50 border border-blue-600/20 rounded-md transition-colors"
                >
                  <Play size={10} /> Enable Demo Mode
                </button>
@@ -96,12 +96,12 @@ export const DeviceMeshList: React.FC<DeviceMeshListProps> = ({ isOpen, onClose,
                     key={device.deviceId} 
                     className={`flex flex-col gap-2 p-3 rounded-lg border transition-all ${
                       device.isCurrent 
-                        ? 'bg-red-950/20 border-red-600/20' 
+                        ? 'bg-blue-950/20 border-blue-600/20' 
                         : 'bg-zinc-900/40 border-transparent hover:bg-white/5'
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-full ${device.isCurrent ? 'bg-red-600/10' : 'bg-black/40'}`}>
+                      <div className={`p-2 rounded-full ${device.isCurrent ? 'bg-blue-600/10' : 'bg-black/40'}`}>
                          {getDeviceIcon(device.deviceType)}
                       </div>
                     
@@ -111,7 +111,7 @@ export const DeviceMeshList: React.FC<DeviceMeshListProps> = ({ isOpen, onClose,
                           {device.deviceType.charAt(0).toUpperCase() + device.deviceType.slice(1)}
                         </span>
                         {device.isCurrent && (
-                            <span className="text-[10px] bg-red-600/20 text-red-300 px-1.5 py-0.5 rounded border border-red-600/20">YOU</span>
+                            <span className="text-[10px] bg-blue-600/20 text-blue-300 px-1.5 py-0.5 rounded border border-blue-600/20">YOU</span>
                         )}
                         {!device.isCurrent && !isSelected && (
                            <button 
@@ -125,7 +125,7 @@ export const DeviceMeshList: React.FC<DeviceMeshListProps> = ({ isOpen, onClose,
                         {isSelected && (
                            <button 
                              onClick={() => setSelectedDevice(null)}
-                             className="text-zinc-500 hover:text-red-400 p-1 rounded-md hover:bg-red-950/30 transition-colors"
+                             className="text-zinc-500 hover:text-blue-400 p-1 rounded-md hover:bg-blue-950/30 transition-colors"
                            >
                              <X size={14} />
                            </button>
@@ -143,7 +143,7 @@ export const DeviceMeshList: React.FC<DeviceMeshListProps> = ({ isOpen, onClose,
                   {/* Input Area when selected */}
                   {isSelected && (
                     <div className="mt-1 space-y-2 animate-in slide-in-from-top-1 duration-200">
-                       <div className="flex items-center gap-1 bg-black/50 border border-zinc-700 rounded-md p-1 pr-1.5 focus-within:border-red-600/50 transition-colors">
+                       <div className="flex items-center gap-1 bg-black/50 border border-zinc-700 rounded-md p-1 pr-1.5 focus-within:border-blue-600/50 transition-colors">
                           <div className="pl-2 text-zinc-500">
                              {inputValue.length > 0 && isUrl(inputValue) ? <Link size={12}/> : <Type size={12}/>}
                           </div>
@@ -159,7 +159,7 @@ export const DeviceMeshList: React.FC<DeviceMeshListProps> = ({ isOpen, onClose,
                           <button 
                              onClick={handleSend}
                              disabled={!inputValue.trim()}
-                             className="bg-red-600 hover:bg-red-500 text-white p-1 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                             className="bg-blue-600 hover:bg-blue-500 text-white p-1 rounded transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                           >
                              <ArrowRight size={12} />
                           </button>
@@ -196,7 +196,7 @@ export const DeviceMeshList: React.FC<DeviceMeshListProps> = ({ isOpen, onClose,
            {devices.length > 0 && !selectedDevice && (
              <button
                onClick={onToggleDemo}
-               className="ml-auto inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-red-400 bg-red-950/40 hover:bg-red-950/60 border border-red-600/30 rounded-md transition-colors"
+               className="ml-auto inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-medium text-blue-400 bg-blue-950/40 hover:bg-blue-950/60 border border-blue-600/30 rounded-md transition-colors"
                title="Disable demo mode and remove simulated devices"
              >
                <Square size={10} /> STOP DEMO

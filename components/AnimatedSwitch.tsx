@@ -17,7 +17,7 @@ export const AnimatedSwitch: React.FC<Props> = ({ checked, onChange, disabled = 
         className="hidden"
       />
       <span className={`relative inline-flex h-7 w-12 rounded-full transition-all duration-300 ${
-        checked ? 'bg-red-600 shadow-lg shadow-red-600/50' : 'bg-zinc-700 shadow-lg shadow-zinc-700/30'
+        checked ? 'bg-blue-600 shadow-lg shadow-blue-600/50' : 'bg-zinc-700 shadow-lg shadow-zinc-700/30'
       } ${disabled ? 'opacity-50 cursor-not-allowed' : 'group-hover:shadow-lg'}`}>
         <span
           className={`inline-block h-6 w-6 transform rounded-full bg-white shadow-md transition-transform duration-300 absolute top-0.5 ${

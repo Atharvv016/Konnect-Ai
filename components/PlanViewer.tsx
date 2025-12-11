@@ -14,7 +14,7 @@ const getSystemIcon = (system: SystemType) => {
     case SystemType.DOCS: return <FileText className="w-4 h-4 text-zinc-300" />;
     case SystemType.SLACK: return <MessageSquare className="w-4 h-4 text-zinc-300" />;
     case SystemType.GMAIL: return <Mail className="w-4 h-4 text-zinc-300" />;
-    case SystemType.ANALYSIS: return <Search className="w-4 h-4 text-red-600" />;
+    case SystemType.ANALYSIS: return <Search className="w-4 h-4 text-blue-600" />;
     default: return <Search className="w-4 h-4 text-zinc-500" />;
   }
 };
@@ -23,8 +23,8 @@ const getStatusIcon = (status: 'pending' | 'processing' | 'complete') => {
   switch (status) {
     case 'complete':
       return (
-        <div className="w-6 h-6 rounded-full bg-red-600/20 border border-red-600/50 flex items-center justify-center z-10 shadow-[0_0_10px_rgba(201,42,42,0.2)] backdrop-blur-sm">
-          <CheckCircle2 className="w-3.5 h-3.5 text-red-600" />
+        <div className="w-6 h-6 rounded-full bg-blue-600/20 border border-blue-600/50 flex items-center justify-center z-10 shadow-[0_0_10px_rgba(37,99,235,0.2)] backdrop-blur-sm">
+          <CheckCircle2 className="w-3.5 h-3.5 text-blue-600" />
         </div>
       );
     case 'processing':

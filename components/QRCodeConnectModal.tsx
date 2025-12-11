@@ -53,7 +53,7 @@ export const QRCodeConnectModal: React.FC<QRCodeConnectModalProps> = ({ isOpen, 
         <div className="p-8 flex flex-col items-center text-center space-y-6">
           <div className="space-y-2">
             <h2 className="text-xl font-bold text-white flex items-center justify-center gap-2">
-              <ScanLine className="text-red-600" />
+              <ScanLine className="text-blue-600" />
               Scan to Connect
             </h2>
             <p className="text-sm text-zinc-400 leading-relaxed">
@@ -68,14 +68,14 @@ export const QRCodeConnectModal: React.FC<QRCodeConnectModalProps> = ({ isOpen, 
              </div>
              
              {/* Decorative Glow Effects */}
-             <div className="absolute inset-0 bg-red-600/20 blur-2xl rounded-full opacity-0 group-hover:opacity-50 transition-opacity duration-700" />
-             <div className="absolute -inset-1 bg-gradient-to-tr from-red-600/20 to-transparent opacity-20 blur-lg rounded-3xl" />
+             <div className="absolute inset-0 bg-blue-600/20 blur-2xl rounded-full opacity-0 group-hover:opacity-50 transition-opacity duration-700" />
+             <div className="absolute -inset-1 bg-gradient-to-tr from-blue-600/20 to-transparent opacity-20 blur-lg rounded-3xl" />
           </div>
 
           <div className="w-full bg-zinc-900/50 rounded-xl p-3 border border-white/5 flex items-center justify-between">
             <div className="text-left">
               <div className="text-[10px] text-zinc-500 uppercase tracking-wider font-bold">Manual Code</div>
-              <div className="text-sm font-mono text-red-600 font-medium tracking-wide">{sessionId}</div>
+              <div className="text-sm font-mono text-blue-600 font-medium tracking-wide">{sessionId}</div>
             </div>
             <button 
               onClick={handleCopy}
@@ -94,7 +94,7 @@ export const QRCodeConnectModal: React.FC<QRCodeConnectModalProps> = ({ isOpen, 
         
         {/* Animated Timeout Bar */}
         <div className="h-1 bg-zinc-900 w-full">
-            <div className="h-full bg-red-600/50 w-full animate-[shrink_60s_linear_forwards]" style={{width: '100%'}} />
+            <div className="h-full bg-blue-600/50 w-full animate-[shrink_60s_linear_forwards]" style={{width: '100%'}} />
         </div>
       </div>
     </div>

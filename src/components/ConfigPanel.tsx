@@ -49,7 +49,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
           
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <Settings className="w-5 h-5 text-red-500" />
+              <Settings className="w-5 h-5 text-blue-500" />
               Settings
             </h2>
             <button onClick={onClose} className="text-zinc-500 hover:text-white transition-colors">
@@ -61,10 +61,10 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
           <div className="mb-8 bg-zinc-900/40 rounded-xl p-4 border border-white/5">
              <div className="flex items-center justify-between mb-3">
                <h3 className="text-sm font-semibold text-zinc-200 flex items-center gap-2">
-                 <Cloud className="w-4 h-4 text-red-500" /> 
+                 <Cloud className="w-4 h-4 text-blue-500" /> 
                  Sync Everywhere
                </h3>
-               {isSyncing && <Loader2 className="w-3 h-3 text-red-500 animate-spin" />}
+               {isSyncing && <Loader2 className="w-3 h-3 text-blue-500 animate-spin" />}
              </div>
              
              {!user ? (
@@ -86,7 +86,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     {user.photoURL ? (
                       <img src={user.photoURL} alt="User" className="w-8 h-8 rounded-full border border-white/10" />
                     ) : (
-                      <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center text-red-400 font-bold text-xs">
+                      <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 font-bold text-xs">
                         {user.displayName?.charAt(0)}
                       </div>
                     )}
@@ -94,11 +94,11 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                       <div className="text-xs font-medium text-white truncate">{user.displayName}</div>
                       <div className="text-[10px] text-zinc-500 truncate">{user.email}</div>
                     </div>
-                    <button onClick={onSignOut} className="text-zinc-500 hover:text-red-400 p-2" title="Sign Out">
+                    <button onClick={onSignOut} className="text-zinc-500 hover:text-blue-400 p-2" title="Sign Out">
                       <LogOut size={16} />
                     </button>
                  </div>
-                 <div className="flex items-center gap-2 text-[10px] text-red-400 bg-red-500/10 px-2 py-1 rounded border border-red-500/20">
+                 <div className="flex items-center gap-2 text-[10px] text-blue-400 bg-blue-500/10 px-2 py-1 rounded border border-blue-500/20">
                     <Cloud size={10} />
                     <span>Configuration synced with Cloud Firestore</span>
                  </div>
@@ -126,7 +126,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                       placeholder="https://company.atlassian.net"
                       value={localConfig.confluenceDomain || ''}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 bg-zinc-950 border border-white/10 rounded-md text-xs text-zinc-200 outline-none focus:border-red-500"
+                      className=\"w-full px-3 py-2 bg-zinc-950 border border-white/10 rounded-md text-xs text-zinc-200 outline-none focus:border-blue-500\"
                     />
                   </div>
                   <div className="grid grid-cols-2 gap-2">
@@ -136,7 +136,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                       placeholder="User Email"
                       value={localConfig.confluenceEmail || ''}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 bg-zinc-950 border border-white/10 rounded-md text-xs text-zinc-200 outline-none focus:border-red-500"
+                      className="w-full px-3 py-2 bg-zinc-950 border border-white/10 rounded-md text-xs text-zinc-200 outline-none focus:border-blue-500"
                     />
                     <input
                       type="password"
@@ -144,7 +144,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                       placeholder="API Token"
                       value={localConfig.confluenceToken || ''}
                       onChange={handleChange}
-                      className="w-full px-3 py-2 bg-zinc-950 border border-white/10 rounded-md text-xs text-zinc-200 outline-none focus:border-red-500"
+                      className="w-full px-3 py-2 bg-zinc-950 border border-white/10 rounded-md text-xs text-zinc-200 outline-none focus:border-blue-500"
                     />
                   </div>
                </div>
@@ -157,7 +157,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                    placeholder="AIzaSy..."
                    value={localConfig.youtubeApiKey || ''}
                    onChange={handleChange}
-                   className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-red-500"
+                   className=\"w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-blue-500\"
                  />
                </div>
 
@@ -169,18 +169,18 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                    placeholder="primary"
                    value={localConfig.calendarId || ''}
                    onChange={handleChange}
-                   className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-red-500"
+                   className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-blue-500"
                  />
                </div>
                <div className="space-y-1">
-                 <label className="text-xs font-medium text-zinc-500 flex items-center gap-2"><Figma size={12}/> Figma Token</label>
+                 <label className="text-xs font-medium text-zinc-500 flex items-center gap-2"><Github size={12}/> GitHub Owner</label>
                  <input
                    type="password"
                    name="figmaToken"
                    placeholder="figd_..."
                    value={localConfig.figmaToken || ''}
                    onChange={handleChange}
-                   className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-red-500"
+                   className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-blue-500"
                  />
                </div>
                <div className="space-y-1">
@@ -191,7 +191,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                    placeholder="https://...@sentry.io/..."
                    value={localConfig.sentryDsn || ''}
                    onChange={handleChange}
-                   className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-red-500"
+                   className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-blue-500"
                  />
                </div>
                <div className="space-y-1">
@@ -202,7 +202,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                    placeholder="postgres://user:pass@localhost:5432/db"
                    value={localConfig.dbConnectionString || ''}
                    onChange={handleChange}
-                   className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-red-500"
+                   className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-blue-500"
                  />
                </div>
             </div>
@@ -221,7 +221,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     name="githubOwner"
                     value={localConfig.githubOwner}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-red-500"
+                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-blue-500"
                   />
                 </div>
                 <div className="space-y-1">
@@ -231,7 +231,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     name="githubRepo"
                     value={localConfig.githubRepo}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-red-500"
+                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -242,7 +242,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                   name="githubToken"
                   value={localConfig.githubToken}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-red-500"
+                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-blue-500"
                 />
               </div>
 
@@ -254,7 +254,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                   name="slackWebhook"
                   value={localConfig.slackWebhook}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-red-500"
+                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-blue-500"
                 />
               </div>
               <div className="space-y-1">
@@ -264,7 +264,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                   name="gmailAddress"
                   value={localConfig.gmailAddress}
                   onChange={handleChange}
-                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-red-500"
+                  className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-blue-500"
                 />
               </div>
               
@@ -276,17 +276,17 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     name="jiraEmail"
                     value={localConfig.jiraEmail}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-red-500"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-xs font-medium text-zinc-500">Jira Domain</label>
+                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-blue-500"
+                 />
+               </div>
+               <div className="space-y-1">
+                 <label className="text-xs font-medium text-zinc-500">Figma Token</label>
                   <input
                     type="text"
                     name="jiraDomain"
                     value={localConfig.jiraDomain}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-red-500"
+                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -297,7 +297,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
                     name="jiraToken"
                     value={localConfig.jiraToken}
                     onChange={handleChange}
-                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-red-500"
+                    className="w-full px-3 py-2 bg-zinc-900/50 border border-white/10 rounded-md text-sm text-zinc-200 outline-none focus:border-blue-500"
                   />
                 </div>
             </div>
@@ -307,7 +307,7 @@ export const ConfigPanel: React.FC<ConfigPanelProps> = ({
           <div className="mt-12">
             <button
               onClick={handleSave}
-              className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-500 text-white py-3 rounded-xl font-bold transition-colors shadow-lg shadow-red-500/20"
+              className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl font-bold transition-colors shadow-lg shadow-blue-500/20"
             >
               <Save className="w-4 h-4" />
               {user ? 'Save to Cloud' : 'Save Locally'}

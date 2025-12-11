@@ -17,8 +17,8 @@ export const KonnectLogo: React.FC<LogoProps> = ({ className = "", size = 32 }) 
     >
       <defs>
         <linearGradient id="logo-gradient" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#dc2626" />
-          <stop offset="100%" stopColor="#7f1d1d" />
+          <stop offset="0%" stopColor="#3b82f6" />
+          <stop offset="100%" stopColor="#1e40af" />
         </linearGradient>
         <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="3" result="blur" />

@@ -14,7 +14,7 @@ export const ChangeLogButton: React.FC<Props> = ({ onClick, label = 'Docs' }) =>
     >
       <Terminal size={16} className="text-zinc-300 group-hover:text-white transition-colors" />
       <span>{label}</span>
-      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-600/0 via-red-600/0 to-red-600/0 group-hover:from-red-600/10 group-hover:via-red-600/5 group-hover:to-red-600/10 transition-all duration-300" />
+      <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600/0 via-blue-600/0 to-blue-600/0 group-hover:from-blue-600/10 group-hover:via-blue-600/5 group-hover:to-blue-600/10 transition-all duration-300" />
     </button>
   );
 };

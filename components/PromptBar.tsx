@@ -271,15 +271,15 @@ export const PromptBar: React.FC<PromptBarProps> = ({ onSend, isLoading, hasImag
       <div className="max-w-3xl mx-auto space-y-2">
         {/* Error Messages */}
         {(recordingError || uploadError) && (
-          <div className="bg-red-950/60 backdrop-blur-sm border border-red-600/40 rounded-lg p-3 flex items-start gap-3 animate-in slide-in-from-bottom-2">
-            <AlertCircle className="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-red-200">{recordingError || uploadError}</p>
+          <div className="bg-blue-950/60 backdrop-blur-sm border border-blue-600/40 rounded-lg p-3 flex items-start gap-3 animate-in slide-in-from-bottom-2">
+            <AlertCircle className="w-4 h-4 text-blue-500 flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-blue-200">{recordingError || uploadError}</p>
             <button 
               onClick={() => {
                 setRecordingError(null);
                 setUploadError(null);
               }}
-              className="ml-auto text-red-400 hover:text-red-300 text-xs"
+              className="ml-auto text-blue-400 hover:text-blue-300 text-xs"
             >
               ✕
             </button>
@@ -291,7 +291,7 @@ export const PromptBar: React.FC<PromptBarProps> = ({ onSend, isLoading, hasImag
           {/* Upload Button */}
           <div className="relative group">
             <button 
-              className="p-3 text-zinc-400 hover:text-red-500 hover:bg-white/10 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
+              className="p-3 text-zinc-400 hover:text-blue-500 hover:bg-white/10 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed" 
               title="Upload Image"
               disabled={isLoading || isRecording}
             >
@@ -310,13 +310,13 @@ export const PromptBar: React.FC<PromptBarProps> = ({ onSend, isLoading, hasImag
           {/* Input Area */}
           <div className="flex-1 min-h-[48px] flex items-center px-2">
             {isRecording ? (
-               <div className="flex-1 flex items-center gap-3 text-red-500 font-medium animate-pulse px-2">
-                  <div className="w-2 h-2 rounded-full bg-red-600" />
+               <div className="flex-1 flex items-center gap-3 text-blue-500 font-medium animate-pulse px-2">
+                  <div className="w-2 h-2 rounded-full bg-blue-600" />
                   <span>Recording... {formatTime(recordingTime)}</span>
                </div>
             ) : isTranscribing ? (
-               <div className="flex-1 flex items-center gap-3 text-red-500 font-medium px-2">
-                  <div className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+               <div className="flex-1 flex items-center gap-3 text-blue-500 font-medium px-2">
+                  <div className="w-2 h-2 rounded-full bg-blue-600 animate-pulse" />
                   <span>Transcribing audio...</span>
                </div>
             ) : (
@@ -340,8 +340,8 @@ export const PromptBar: React.FC<PromptBarProps> = ({ onSend, isLoading, hasImag
               disabled={isLoading || isTranscribing}
               className={`p-3 rounded-full transition-all ${
                 isRecording 
-                  ? 'bg-red-600/30 text-red-500 hover:bg-red-600/40' 
-                  : 'text-zinc-400 hover:text-red-500 hover:bg-white/10'
+                  ? 'bg-blue-600/30 text-blue-500 hover:bg-blue-600/40' 
+                  : 'text-zinc-400 hover:text-blue-500 hover:bg-white/10'
               }`}
               title={isRecording ? "Stop recording" : "Start recording"}
             >
@@ -354,7 +354,7 @@ export const PromptBar: React.FC<PromptBarProps> = ({ onSend, isLoading, hasImag
               disabled={isLoading || isTranscribing || (text.trim().length === 0 && !isRecording)}
               className={`p-3 rounded-full transition-all ${
                  (text.trim().length > 0 || isRecording) && !isLoading && !isTranscribing
-                   ? 'bg-red-600 text-white shadow-[0_0_15px_rgba(201,42,42,0.5)] hover:bg-red-700' 
+                   ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.5)] hover:bg-blue-700' 
                    : 'bg-white/5 text-zinc-600 cursor-not-allowed'
               }`}
               title={isRecording ? "Stop recording" : "Send"}

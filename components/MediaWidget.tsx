@@ -31,7 +31,7 @@ export const MediaWidget: React.FC<Props> = ({ mediaState, onPlay, onPause, onNe
         {mediaState.isPlaying ? (
           <button
             onClick={onPause}
-            className="flex-1 p-2 bg-red-600 hover:bg-red-700 rounded transition-colors"
+            className="flex-1 p-2 bg-blue-600 hover:bg-blue-700 rounded transition-colors"
             title="Pause"
           >
             <Pause size={14} className="text-white" />
@@ -39,7 +39,7 @@ export const MediaWidget: React.FC<Props> = ({ mediaState, onPlay, onPause, onNe
         ) : (
           <button
             onClick={onPlay}
-            className="flex-1 p-2 bg-red-600 hover:bg-red-700 rounded transition-colors"
+            className="flex-1 p-2 bg-blue-600 hover:bg-blue-700 rounded transition-colors"
             title="Play"
           >
             <Play size={14} className="text-white" />

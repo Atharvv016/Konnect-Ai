@@ -15,7 +15,7 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
       {transcription && (
         <div className="bg-zinc-900/50 backdrop-blur-xl rounded-2xl border border-white/5 p-4 flex items-start gap-4 shadow-sm animate-in fade-in slide-in-from-bottom-2">
             <div className="bg-white/5 p-2 rounded-full border border-white/10">
-               <Mic className="w-4 h-4 text-red-500" />
+               <Mic className="w-4 h-4 text-white" />
             </div>
             <div>
                <h4 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-1">Voice Command</h4>
@@ -26,8 +26,8 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
 
       {/* War Room / Calendar Card */}
       {results.calendarEvent && (
-        <div className="bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-red-500/20 p-4 flex items-center gap-4 animate-in fade-in slide-in-from-bottom-2">
-            <div className="bg-red-500/10 p-3 rounded-xl text-red-500">
+        <div className="bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-zinc-700/20 p-4 flex items-center gap-4 animate-in fade-in slide-in-from-bottom-2">
+            <div className="bg-blue-500/10 p-3 rounded-xl text-blue-500">
                <Calendar size={20} />
             </div>
             <div className="flex-1">
@@ -36,7 +36,7 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
                     <h4 className="text-sm font-bold text-zinc-100">War Room Scheduled</h4>
                     <p className="text-xs text-zinc-400">{results.calendarEvent.startTime}</p>
                   </div>
-                  <a href={results.calendarEvent.meetLink} target="_blank" rel="noreferrer" className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-400 px-3 py-1.5 rounded-full transition-colors font-medium border border-red-500/10">
+                  <a href={results.calendarEvent.meetLink} target="_blank" rel="noreferrer" className="text-xs bg-blue-500/10 hover:bg-blue-500/20 text-blue-400 px-3 py-1.5 rounded-full transition-colors font-medium border border-blue-500/10">
                     Join Meet
                   </a>
                </div>
@@ -52,7 +52,7 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
       {results.youtubeResults && results.youtubeResults.videos && results.youtubeResults.videos.length > 0 && (
          <div className="bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-white/10 p-4 animate-in fade-in slide-in-from-bottom-2">
              <div className="flex items-center gap-2 mb-3">
-               <Youtube className="w-4 h-4 text-red-500" />
+               <Youtube className="w-4 h-4 text-blue-500" />
                <h4 className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Suggested Solutions</h4>
              </div>
              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -62,18 +62,18 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
                      href={`https://www.youtube.com/watch?v=${video.id}`} 
                      target="_blank" 
                      rel="noreferrer"
-                     className="group block bg-black/40 rounded-xl overflow-hidden border border-white/5 hover:border-red-500/30 transition-all"
+                     className="group block bg-black/40 rounded-xl overflow-hidden border border-white/5 hover:border-blue-500/30 transition-all"
                    >
                       <div className="relative aspect-video">
                          <img src={video.thumbnail} alt={video.title} className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="bg-black/60 rounded-full p-2 backdrop-blur-sm group-hover:bg-red-600/80 transition-colors">
+                            <div className="bg-black/60 rounded-full p-2 backdrop-blur-sm group-hover:bg-blue-600/80 transition-colors">
                                <Play size={12} className="text-white fill-white" />
                             </div>
                          </div>
                       </div>
                       <div className="p-2">
-                         <h5 className="text-xs font-bold text-zinc-200 line-clamp-1 group-hover:text-red-400 transition-colors">{video.title}</h5>
+                         <h5 className="text-xs font-bold text-zinc-200 line-clamp-1 group-hover:text-blue-400 transition-colors">{video.title}</h5>
                          <p className="text-[10px] text-zinc-500">{video.channel}</p>
                       </div>
                    </a>
@@ -87,8 +87,8 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
         <div className="bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-white/10 p-0 overflow-hidden shadow-lg animate-in fade-in slide-in-from-bottom-2">
             <div className="px-4 py-2 bg-white/5 border-b border-white/10 flex items-center justify-between">
                <div className="flex items-center gap-2">
-                  <Activity size={14} className="text-red-400" />
-                  <span className="text-xs font-bold text-red-400">SENTRY DEBUGGER</span>
+                  <Activity size={14} className="text-blue-400" />
+                  <span className="text-xs font-bold text-blue-400">SENTRY DEBUGGER</span>
                </div>
                <span className="text-[10px] text-zinc-400 font-mono">{results.sentryAnalysis.fileLocation}</span>
             </div>
@@ -97,7 +97,7 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
                   <div className="text-xs text-zinc-500 uppercase font-bold mb-1">Root Cause Analysis</div>
                   <p className="text-sm text-zinc-200">{results.sentryAnalysis.rootCause}</p>
                </div>
-               <div className="bg-black/50 p-3 rounded border border-white/5 font-mono text-xs text-red-300 overflow-x-auto">
+               <div className="bg-black/50 p-3 rounded border border-white/5 font-mono text-xs text-blue-300 overflow-x-auto">
                   {results.sentryAnalysis.stackTraceSnippet}
                </div>
             </div>
@@ -112,7 +112,7 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
                   <Eye size={16} className="text-white" />
                </div>
                <h4 className="text-sm font-bold text-zinc-200">Visual QA Check</h4>
-               <div className={`ml-auto text-xs font-bold px-2 py-0.5 rounded ${results.figmaComparison.driftScore > 10 ? 'bg-red-500/20 text-red-400' : 'bg-white/10 text-white'}`}>
+               <div className={`ml-auto text-xs font-bold px-2 py-0.5 rounded ${results.figmaComparison.driftScore > 10 ? 'bg-blue-500/20 text-blue-400' : 'bg-white/10 text-white'}`}>>
                   {results.figmaComparison.driftScore}% Drift
                </div>
             </div>
@@ -120,11 +120,11 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
                <div className="h-24 bg-zinc-800 rounded flex items-center justify-center border border-white/5 text-xs text-zinc-600">
                   Implementation
                </div>
-               <div className="h-24 bg-zinc-800 rounded flex items-center justify-center border border-red-500/20 text-xs text-red-900/50 font-bold">
+               <div className="h-24 bg-zinc-800 rounded flex items-center justify-center border border-blue-500/20 text-xs text-blue-900/50 font-bold">
                   Figma Design
                </div>
             </div>
-            <p className="text-xs text-zinc-400 border-l-2 border-red-500/50 pl-3">
+            <p className="text-xs text-zinc-400 border-l-2 border-blue-500/50 pl-3">
                {results.figmaComparison.critique}
             </p>
         </div>
@@ -134,12 +134,12 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
       {results.sqlQuery && (
         <div className="bg-zinc-900/60 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden animate-in fade-in slide-in-from-bottom-2">
             <div className="px-4 py-2 bg-white/5 border-b border-white/10 flex items-center gap-2">
-               <Database size={14} className="text-red-500" />
+               <Database size={14} className="text-blue-500" />
                <span className="text-xs font-bold text-zinc-300">SAFE SQL MODE</span>
                {results.sqlQuery.isSafe ? (
                  <span className="ml-auto text-[10px] bg-white/10 text-white px-2 py-0.5 rounded border border-white/10">READ ONLY</span>
                ) : (
-                 <span className="ml-auto text-[10px] bg-red-500/20 text-red-300 px-2 py-0.5 rounded border border-red-500/20">BLOCKED</span>
+                 <span className="ml-auto text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded border border-blue-500/20">BLOCKED</span>
                )}
             </div>
             <div className="p-4 bg-black/40">
@@ -159,10 +159,10 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
             </h4>
             <div className="space-y-2">
                {results.ragContext.map((ctx, i) => (
-                  <div key={i} className="bg-black/40 p-3 rounded-lg border border-white/5 hover:border-red-500/30 transition-colors group cursor-pointer">
+                  <div key={i} className="bg-black/40 p-3 rounded-lg border border-white/5 hover:border-blue-500/30 transition-colors group cursor-pointer">
                      <div className="flex justify-between items-start mb-1">
-                        <span className="text-xs font-bold text-red-400 group-hover:underline">{ctx.sourceTitle}</span>
-                        <ExternalLink size={10} className="text-zinc-600 group-hover:text-red-400" />
+                        <span className="text-xs font-bold text-blue-400 group-hover:underline">{ctx.sourceTitle}</span>
+                        <ExternalLink size={10} className="text-zinc-600 group-hover:text-blue-400" />
                      </div>
                      <p className="text-xs text-zinc-400 line-clamp-2">{ctx.snippet}</p>
                   </div>
@@ -174,15 +174,15 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
       {/* Standard Simulation Summary Card */}
       <div className="bg-black/50 backdrop-blur-xl rounded-2xl border border-white/10 p-5 shadow-lg shadow-black/40">
         <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-wider mb-4 flex items-center gap-2">
-            <span className="w-1 h-1 bg-red-500 rounded-full shadow-[0_0_8px_rgba(220,38,38,0.8)]"></span> Detected Context
+            <span className="w-1 h-1 bg-blue-500 rounded-full shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span> Detected Context
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div className="bg-red-500/5 p-3 rounded-xl border border-red-500/20 flex items-start gap-3 backdrop-blur-sm">
-             <div className="bg-red-500/10 p-1.5 rounded-lg text-red-500">
+          <div className="bg-blue-500/5 p-3 rounded-xl border border-blue-500/20 flex items-start gap-3 backdrop-blur-sm">
+             <div className="bg-blue-500/10 p-1.5 rounded-lg text-blue-500">
                 <AlertTriangle size={16} />
              </div>
              <div>
-               <div className="text-xs text-red-300/80 font-medium mb-0.5">Priority Bug</div>
+               <div className="text-xs text-blue-300/80 font-medium mb-0.5">Priority Bug</div>
                <div className="text-sm text-zinc-200 font-medium">{results.bugSummary}</div>
              </div>
           </div>
@@ -201,9 +201,9 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
       {/* Simulated Google Doc */}
       <div className="bg-white rounded-2xl overflow-hidden shadow-xl border border-zinc-800 opacity-95">
         <div className="bg-black px-4 py-3 flex items-center gap-3 border-b border-zinc-800">
-          <FileText className="text-red-500 w-4 h-4" />
+          <FileText className="text-blue-500 w-4 h-4" />
           <div className="text-zinc-200 font-medium text-sm">Google Docs Simulation</div>
-          <div className="ml-auto text-red-500 text-[10px] bg-red-950/30 px-2 py-0.5 rounded-full border border-red-800/50">
+          <div className="ml-auto text-blue-500 text-[10px] bg-blue-950/30 px-2 py-0.5 rounded-full border border-blue-800/50">
             {results.docEntryId}
           </div>
         </div>
@@ -242,7 +242,7 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
       {results.gmailBody && (
         <div className="bg-white rounded-2xl overflow-hidden shadow-xl border border-zinc-800 opacity-95">
           <div className="bg-black px-4 py-3 flex items-center gap-3 border-b border-zinc-800">
-            <Mail className="text-red-500 w-4 h-4" />
+            <Mail className="text-blue-500 w-4 h-4" />
             <div className="text-zinc-200 font-medium text-sm">Gmail Simulation</div>
             <div className="ml-auto text-zinc-500 text-[10px] font-mono">
               Sent
@@ -277,7 +277,7 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
         </div>
         <div className="p-5 bg-zinc-900">
           <div className="flex gap-3">
-            <div className="w-9 h-9 rounded bg-red-600 flex items-center justify-center text-white font-bold flex-shrink-0 text-sm">
+            <div className="w-9 h-9 rounded bg-blue-600 flex items-center justify center text-white font-bold flex-shrink-0 text-sm">
               CP
             </div>
             <div className="flex-1">
@@ -290,10 +290,10 @@ export const ResultsViewer: React.FC<ResultsViewerProps> = ({ results, transcrip
               </div>
               <div className="mt-3 border-l-2 border-zinc-700 pl-3 py-1">
                 <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 rounded bg-red-900/20 flex items-center justify-center">
-                        <FileText size={10} className="text-red-400"/>
+                    <div className="w-4 h-4 rounded bg-blue-900/20 flex items-center justify-center">
+                        <FileText size={10} className="text-blue-400"/>
                     </div>
-                    <div className="text-xs font-medium text-red-400 hover:underline cursor-pointer">
+                    <div className="text-xs font-medium text-blue-400 hover:underline cursor-pointer">
                     Release Notes ({results.docEntryId})
                     </div>
                 </div>

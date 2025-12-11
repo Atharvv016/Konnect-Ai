@@ -116,16 +116,16 @@ export function RemindersPanel({
   };
 
   const getStatusIcon = (status: string) => {
-    if (status === 'executed') return <CheckCircle size={14} className="text-green-500" />;
-    if (status === 'failed') return <AlertCircle size={14} className="text-red-500" />;
-    return <Clock size={14} className="text-yellow-500" />;
+    if (status === 'executed') return <CheckCircle size={14} className="text-blue-500" />;
+    if (status === 'failed') return <AlertCircle size={14} className="text-white" />;
+    return <Clock size={14} className="text-blue-500" />;
   };
 
   const getStatusColor = (status: string) => {
-    if (status === 'executed') return 'bg-green-500/10 border-green-500/30 text-green-400';
-    if (status === 'failed') return 'bg-red-500/10 border-red-500/30 text-red-400';
-    if (status === 'cancelled') return 'bg-zinc-500/10 border-zinc-500/30 text-zinc-400';
-    return 'bg-yellow-500/10 border-yellow-500/30 text-yellow-400';
+    if (status === 'executed') return 'bg-blue-500/10 border-blue-500/30 text-blue-400';
+    if (status === 'failed') return 'bg-blue-600/20 border-blue-500/30 text-blue-300';
+    if (status === 'cancelled') return 'bg-blue-500/10 border-blue-500/30 text-blue-400';
+    return 'bg-blue-500/10 border-blue-500/30 text-blue-400';
   };
 
   if (!isOpen) return null;
@@ -141,11 +141,11 @@ export function RemindersPanel({
       />
 
       {/* Panel */}
-      <div className="relative w-full max-w-2xl max-h-[90vh] mx-4 bg-gradient-to-br from-zinc-900 via-black to-red-950/30 border border-red-500/20 rounded-lg shadow-2xl overflow-hidden flex flex-col">
+      <div className="relative w-full max-w-2xl max-h-[90vh] mx-4 bg-gradient-to-br from-zinc-900 via-black to-blue-950/30 border border-blue-700/20 rounded-lg shadow-2xl overflow-hidden flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-red-500/20 bg-black/40">
+        <div className="flex items-center justify-between p-6 border-b border-blue-700/20 bg-black/40">
           <div className="flex items-center gap-3">
-            <Clock size={24} className="text-red-500" />
+            <Clock size={24} className="text-white" />
             <div>
               <h2 className="text-xl font-bold text-white">Reminders</h2>
               <p className="text-xs text-zinc-400">{pendingCount} pending</p>
@@ -153,26 +153,26 @@ export function RemindersPanel({
           </div>
           <button
             onClick={onClose}
-            className="p-1 hover:bg-red-500/20 rounded transition-colors"
+            className="p-1 hover:bg-blue-700/20 rounded transition-colors"
           >
-            <X size={20} className="text-zinc-400 hover:text-red-400" />
+            <X size={20} className="text-zinc-400 hover:text-white" />
           </button>
         </div>
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto">
           {/* Add Reminder Button */}
-          <div className="p-6 border-b border-red-500/10">
+          <div className="p-6 border-b border-blue-700/10">
             {!formOpen ? (
               <button
                 onClick={() => setFormOpen(true)}
-                className="w-full flex items-center gap-2 px-4 py-3 bg-red-500/20 hover:bg-red-500/30 border border-red-500/40 rounded-lg transition-colors text-red-400 font-medium"
+                className="w-full flex items-center gap-2 px-4 py-3 bg-blue-700/30 hover:bg-blue-700/50 border border-blue-600/40 rounded-lg transition-colors text-blue-200 font-medium"
               >
                 <Plus size={18} />
                 <span>Add New Reminder</span>
               </button>
             ) : (
-              <div className="space-y-4 p-4 bg-black/40 rounded-lg border border-red-500/20">
+              <div className="space-y-4 p-4 bg-black/40 rounded-lg border border-blue-700/20">
                 <div>
                   <label className="block text-xs font-semibold text-zinc-300 mb-2">
                     Title
@@ -189,7 +189,7 @@ export function RemindersPanel({
                       }
                     }}
                     placeholder="e.g., Review PR#123"
-                    className="w-full px-3 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-red-500/50 focus:ring-1 focus:ring-red-500/20"
+                    className="w-full px-3 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20"
                   />
                 </div>
 
@@ -209,7 +209,7 @@ export function RemindersPanel({
                     }}
                     placeholder="Add more details..."
                     rows={2}
-                    className="w-full px-3 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-red-500/50 focus:ring-1 focus:ring-red-500/20 resize-none"
+                    className="w-full px-3 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 resize-none"
                   />
                 </div>
 
@@ -229,7 +229,7 @@ export function RemindersPanel({
                     }}
                     placeholder="e.g., Check GitHub for new PRs and summarize them"
                     rows={3}
-                    className="w-full px-3 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-red-500/50 focus:ring-1 focus:ring-red-500/20 resize-none"
+                    className="w-full px-3 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded text-white text-sm placeholder-zinc-600 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20 resize-none"
                   />
                 </div>
 
@@ -249,7 +249,7 @@ export function RemindersPanel({
                           timeRef.current?.focus();
                         }
                       }}
-                      className="w-full px-3 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded text-white text-sm focus:outline-none focus:border-red-500/50 focus:ring-1 focus:ring-red-500/20"
+                      className="px-3 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded text-white text-sm focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20"
                     />
                   </div>
                   <div>
@@ -268,7 +268,7 @@ export function RemindersPanel({
                           createButtonRef.current?.click();
                         }
                       }}
-                      className="w-full px-3 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded text-white text-sm focus:outline-none focus:border-red-500/50 focus:ring-1 focus:ring-red-500/20"
+                      className="w-full px-3 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded text-white text-sm focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/20"
                     />
                   </div>
                 </div>
@@ -293,7 +293,7 @@ export function RemindersPanel({
                         min={1}
                         value={intervalDays}
                         onChange={(e) => setIntervalDays(Number(e.target.value))}
-                        className="w-20 px-2 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded text-white text-sm"
+                        className="w-20 px-2 py-2 bg-zinc-900/50 border border-zinc-700/50 rounded text-white text-sm focus:outline-none focus:border-blue-500/50"
                       />
                     )}
                   </div>
@@ -305,7 +305,7 @@ export function RemindersPanel({
                           key={d}
                           type="button"
                           onClick={() => setWeekdays(prev => prev.includes(i) ? prev.filter(x => x !== i) : [...prev, i])}
-                          className={`px-2 py-1 rounded text-xs ${weekdays.includes(i) ? 'bg-red-500 text-white' : 'bg-zinc-800 text-zinc-300'}`}
+                          className={`px-2 py-1 rounded text-xs ${weekdays.includes(i) ? 'bg-blue-500 text-white' : 'bg-zinc-800 text-zinc-300'}`}
                         >{d}</button>
                       ))}
                     </div>
@@ -334,7 +334,7 @@ export function RemindersPanel({
                       {attachments.map(a => (
                         <div key={a.id} className="text-xs px-2 py-1 bg-zinc-900 rounded flex items-center gap-2">
                           <span className="truncate max-w-[120px]">{a.file.name}</span>
-                          <button type="button" onClick={() => setAttachments(prev => prev.filter(x => x.id !== a.id))} className="text-red-400">×</button>
+                          <button type="button" onClick={() => setAttachments(prev => prev.filter(x => x.id !== a.id))} className="text-blue-400">×</button>
                         </div>
                       ))}
                     </div>
@@ -369,7 +369,7 @@ export function RemindersPanel({
                             console.error('Microphone access denied', err);
                             alert('Microphone access denied or unavailable');
                           }
-                        }} className="px-3 py-2 rounded bg-red-500 text-white flex items-center gap-2"><Mic /> Record</button>
+                        }} className="px-3 py-2 rounded bg-blue-500 text-white flex items-center gap-2"><Mic /> Record</button>
                       ) : (
                         <button type="button" onClick={() => { mediaRecorderRef?.stop(); }} className="px-3 py-2 rounded bg-zinc-800 text-white flex items-center gap-2"><StopCircle /> Stop</button>
                       )}
@@ -378,7 +378,7 @@ export function RemindersPanel({
                         <div className="flex items-center gap-2">
                           <audio controls src={URL.createObjectURL(recordedBlob)} className="h-8" />
                           <div className="text-xs text-zinc-400">{Math.round(recordDurationMs/1000)}s</div>
-                          <button type="button" onClick={() => { setRecordedBlob(null); setRecordDurationMs(0); }} className="text-red-400 text-xs">Remove</button>
+                          <button type="button" onClick={() => { setRecordedBlob(null); setRecordDurationMs(0); }} className="text-blue-400 text-xs">Remove</button>
                         </div>
                       )}
                     </div>
@@ -389,7 +389,7 @@ export function RemindersPanel({
                   <button
                     ref={createButtonRef}
                     onClick={handleAddReminder}
-                    className="flex-1 px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-medium rounded transition-colors"
+                    className="flex-1 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white font-medium rounded transition-colors"
                   >
                     Create Reminder
                   </button>
@@ -463,7 +463,7 @@ export function RemindersPanel({
                         </div>
                       </div>
                       {editingRecurrenceId === reminder.id && (
-                        <div className="mt-2 p-2 bg-black/30 rounded border border-red-500/10">
+                        <div className="mt-2 p-2 bg-black/30 rounded border border-blue-500/10">
                           <div className="flex items-center gap-2">
                             <select value={editRecurrenceType} onChange={(e) => setEditRecurrenceType(e.target.value as any)} className="px-2 py-1 bg-zinc-900 text-sm rounded">
                               <option value="none">None</option>
@@ -478,7 +478,7 @@ export function RemindersPanel({
                           {editRecurrenceType === 'weekly' && (
                             <div className="mt-2 flex gap-1 flex-wrap">
                               {['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].map((d, i) => (
-                                <button key={d} type="button" onClick={() => setEditWeekdays(prev => prev.includes(i) ? prev.filter(x => x !== i) : [...prev, i])} className={`px-2 py-1 rounded text-xs ${editWeekdays.includes(i) ? 'bg-red-500 text-white' : 'bg-zinc-800 text-zinc-300'}`}>{d}</button>
+                                <button key={d} type="button" onClick={() => setEditWeekdays(prev => prev.includes(i) ? prev.filter(x => x !== i) : [...prev, i])} className={`px-2 py-1 rounded text-xs ${editWeekdays.includes(i) ? 'bg-blue-500 text-white' : 'bg-zinc-800 text-zinc-300'}`}>{d}</button>
                               ))}
                             </div>
                           )}
@@ -487,7 +487,7 @@ export function RemindersPanel({
                               const rec: RecurrenceSpec | undefined = editRecurrenceType === 'none' ? undefined : editRecurrenceType === 'interval' ? { type: 'interval', intervalDays: editIntervalDays } : editRecurrenceType === 'weekly' ? { type: 'weekly', weekdays: editWeekdays } : { type: 'daily' };
                               onUpdateRecurrence(reminder.id, rec);
                               setEditingRecurrenceId(null);
-                            }} className="px-3 py-1 bg-red-500 rounded text-sm">Save</button>
+                            }} className="px-3 py-1 bg-blue-500 rounded text-sm">Save</button>
                             <button onClick={() => setEditingRecurrenceId(null)} className="px-3 py-1 bg-zinc-700 rounded text-sm">Cancel</button>
                           </div>
                         </div>
@@ -495,9 +495,9 @@ export function RemindersPanel({
                     </div>
                     <button
                       onClick={() => onDeleteReminder(reminder.id)}
-                      className="p-2 hover:bg-red-500/20 rounded transition-colors flex-shrink-0"
-                    >
-                      <Trash2 size={16} className="text-red-400" />
+                      className="p-2 hover:bg-blue-500/20 rounded transition-colors flex-shrink-0"
+                      >
+                      <Trash2 size={16} className="text-blue-400" />
                     </button>
                   </div>
                 </div>
